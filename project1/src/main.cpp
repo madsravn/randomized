@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include <iterator>
+#include <chrono>
 
 template <class T>
 inline std::ostream& operator << (std::ostream& os, const std::vector<T>& v) 
@@ -28,7 +29,7 @@ int find(std::vector<int> L, int k, std::mt19937 gen) {
 
 
 	std::partition_copy(std::begin(L), std::end(L), std::back_inserter(L1), std::back_inserter(L2), // true, false
-		[&](int i) {return i > e; });
+		[e](int i) {return i > e; });
 
 	if (L1.size() == (k - 1)) {
 		return e;
@@ -48,6 +49,8 @@ int main() {
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
+    // Ifølge dokumentationen for random_device er det ikke sikkert den er implementeret ved alle compilere endnu, så vi seeder lige med tiden oveni.
+    gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
 
 	std::cout << find(integers, 4, gen) << std::endl;
 

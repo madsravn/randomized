@@ -1,4 +1,4 @@
-NAME = datastructures
+NAME = randAlg
 
 all: $(NAME)
 
