@@ -18,6 +18,25 @@ inline std::ostream& operator << (std::ostream& os, const std::vector<T>& v)
     return os;
 }
 
+std::vector<int> generate_integers(int size) {
+    std::vector<int> vec(size);
+    int el = 1; 
+    std::generate_n(vec.begin(), vec.size(), [&](){return el++;});
+    
+    std::random_device rd;
+	std::mt19937 gen(rd());
+    gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
+    std::uniform_int_distribution<> dis(100, 1000);
+    int times = dis(gen);
+
+    for(int i = 0; i < times; ++i) {
+        std::shuffle(vec.begin(), vec.end(), gen);
+    }
+    return vec;
+}
+
+
+
 int find(std::vector<int> L, int k, std::mt19937 gen) {
 	std::vector<int> L1, L2;
 
@@ -29,7 +48,7 @@ int find(std::vector<int> L, int k, std::mt19937 gen) {
 
 
 	std::partition_copy(std::begin(L), std::end(L), std::back_inserter(L1), std::back_inserter(L2), // true, false
-		[e](int i) {return i > e; });
+		[e](int i) {return i < e; });
 
 	if (L1.size() == (k - 1)) {
 		return e;
@@ -45,14 +64,14 @@ int find(std::vector<int> L, int k, std::mt19937 gen) {
 int main() {
 
 
-	std::vector<int> integers{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+    std::vector<int> integers = generate_integers(100);
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
     // Ifølge dokumentationen for random_device er det ikke sikkert den er implementeret ved alle compilere endnu, så vi seeder lige med tiden oveni.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
 
-	std::cout << find(integers, 4, gen) << std::endl;
+	std::cout << find(integers, integers.size()/3, gen) << std::endl;
 
 	return 0;
 }
