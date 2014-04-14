@@ -1,0 +1,32 @@
+\documentclass{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newtheorem{thm}{Theorem}
+\newcommand{\+}[1]{\ensuremath{\boldsymbol{#1}}}
+\begin{document}
+\chapter{April 10th}
+\section{Fingerprinting}
+The motivation is that we might be able to determine whether or not it is feasible to find a concrete solution to a problem, that has a bad time complexity.
+This might save a lot of time trying to solve an impossible solution.
+\par
+\subsection{Matrix multiplication identity}
+One example is matrix operations. All non-trivial matrix operations has a complexity of $\mathcal{O}(n^3$. This is operations like determinant, inverse and multiplication. Some have theoretical lower bounds, but are impractical or with high constants.
+\par
+A place where fingerprinting is useful is determining matrix multiplication identity. That is given matrices $A, B \text{ \& } C$ determine whether $AB = C$.
+Obviously a solution is to calculate $\+A\+B$ and compare with $\+C$, this would though obviously be $\mathcal{O}(n^3)$.
+\par
+Another option is to select a random vector $r \in \left\{0,1\right\}^n$ and compute $\+A(\+Br)= \+Cr$. Each of the operations are of order $\mathcal{O}(n^2)$.
+\subsubsection{Analysis}
+\begin{thm}[Rajeev]\label{matrixfingerprinting}
+Let $\+A,\ \+B\ and\ \+C$ be $n \times n$ matrices over $\mathbb{F}$ such that $\+A\+B \neq \+C$. Then for $\+{r}$ chosen uniformly at random from $\left\{0,1\right\}^n,$\\ $Pr[\+A\+B\+r = \+C\+r] \leq 1/2$.\\
+\end{thm}
+\begin{proof}
+Let $\+D = \+A\+B-\+C$. As $\+A\+B \neq \+C$ we know that $\+D$ is not the all-zeroes matrix. We now wish to get an upper bound on $Pr[Dr = 0]$. Without loss of generality assume that the first row of $\+D$ has a non-zero entry, and that all non-zero entries of that row precedes any zero entries. 
+Let this row be named $\+d$ and assume that the first $k > 0$ entries of $\+d$ is non-zero.
+as the first entry of $\+D\+r$ is $\+d^T\+r$, we're going to focus on this.
+\par
+$\+d^T\+r =$ iff $r_1 = \frac{\sum_{i=2}^{k}d_ir_i}{d_1}$.
+Using the Principle of Deferred Decisions we can assume that the last selected entry in $\+r$ will be $r_1$. This fixes the right hand side of the above equation at some value $v \in \mathbb{F}$. Since $r_1$ is uniformly distributed over a set of size 2, the probability that it is equal to $v$ cannot exceed 1/2.
+\end{proof}
+\end{document}
