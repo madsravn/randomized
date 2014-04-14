@@ -37,7 +37,7 @@ std::vector<int> generate_integers(int size) {
 
 
 
-int find(std::vector<int> L, int k, std::mt19937 gen) {
+int find(std::vector<int> L, int k, std::mt19937& gen) {
 	std::vector<int> L1, L2;
 
 	std::uniform_int_distribution<> dis(0, L.size()-1);
