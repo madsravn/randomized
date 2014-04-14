@@ -3,6 +3,7 @@
 *.lo
 *.o
 *.obj
+randAlg
 
 # Compiled Dynamic libraries
 *.so
