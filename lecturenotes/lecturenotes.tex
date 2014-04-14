@@ -29,4 +29,21 @@ as the first entry of $\+D\+r$ is $\+d^T\+r$, we're going to focus on this.
 $\+d^T\+r =$ iff $r_1 = \frac{\sum_{i=2}^{k}d_ir_i}{d_1}$.
 Using the Principle of Deferred Decisions we can assume that the last selected entry in $\+r$ will be $r_1$. This fixes the right hand side of the above equation at some value $v \in \mathbb{F}$. Since $r_1$ is uniformly distributed over a set of size 2, the probability that it is equal to $v$ cannot exceed 1/2.
 \end{proof}
+
+\subsection{Van der Monde Matrices}
+Another use for Randomized finger printing is using calculating the determinant of a Vandermonde matrix to determine identity between multivariate polynomials. This might be useful in cases where we do not have the polynomials explicitly represented but rather implied.
+The Vandermonde Matrix ca be used to figure this, but calculating this determinant is in many cases in feasible as it has a number of terms around $n!$ terms.
+\par
+The Vandermonde matrix is defined in terms of the variables: $x_1 \ldots x_n$ as follows:\\
+$M = \begin{pmatrix}
+  1 & x_1 & x_1^2 & \cdots & x_1^{n-1} \\
+  1 & x_2 & x_2^2 & \cdots & x_2^{n-1}\\
+  \vdots & \vdots & \vdots & \ddots & \vdots \\
+  1 & x_n & x_n^2 & \cdots & x_n^{n-1}
+\end{pmatrix}
+$
+The idea is that $|M| =\prod_i<j (x_j - x_i)$, which we would like to prove, but we don't know whether it holds true.
+For this reason a strategy might be to verify this on a few large matrices before abandoning the approach.
+\par
+An issue with this is that we can end up with extremely large number in our intermediate calculations. We can solve this by doing our calculations for finite field $\mathbb{F}_p$. $|\mathbb{F}_p|$ needs to be larger than the degree of the polynomial since the polynomial can have that many roots.. Which is $\mathbb{O}(n^2)$. $p$ needs to be a prime, in order for us to guarantee that we don't introduce additional roots by keeping our computations in $\mathbb{F}_p$.
 \end{document}
