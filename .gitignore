@@ -194,3 +194,25 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+#Latex generated files
+*.aux
+*.toc
+*.pdf
+*.out
+*.lof
+*.log
+*.dvi
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+*.thm
+*.idx
+*.ilg
+*.ind
+*.ist
+*.pyg
+*.tdo
