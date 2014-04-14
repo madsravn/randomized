@@ -216,3 +216,6 @@ FakesAssemblies/
 *.ist
 *.pyg
 *.tdo
+
+#vim
+*.swap
