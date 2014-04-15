@@ -18,6 +18,8 @@ inline std::ostream& operator << (std::ostream& os, const std::vector<T>& v)
     return os;
 }
 
+//TODO: Lav en laaaaaang test og se hvorvidt det sker at to generate_integers lists er ens.
+// Måske regne på det med E[] og se om det passer overens
 std::vector<int> generate_integers(int size) {
     std::vector<int> vec(size);
     int el = 1; 
@@ -37,8 +39,9 @@ std::vector<int> generate_integers(int size) {
 
 
 
-int find(std::vector<int> L, int k, std::mt19937& gen) {
+int find(std::vector<int> L, int k, std::mt19937& gen, int& depth, int& comparisons) {
 	std::vector<int> L1, L2;
+    ++depth;
 
 	std::uniform_int_distribution<> dis(0, L.size()-1);
 
@@ -48,15 +51,15 @@ int find(std::vector<int> L, int k, std::mt19937& gen) {
 
 
 	std::partition_copy(std::begin(L), std::end(L), std::back_inserter(L1), std::back_inserter(L2), // true, false
-		[e](int i) {return i < e; });
+		[&](int i) {++comparisons; return i < e; });
 
 	if (L1.size() == (k - 1)) {
 		return e;
 	}
 	if (L1.size() > (k - 1)) {
-		return find(L1, k, gen);
+		return find(L1, k, gen, depth, comparisons);
 	} else {
-		return find(L2, k - 1 - L1.size(), gen);
+		return find(L2, k - 1 - L1.size(), gen, depth, comparisons);
 	}
 	
 }
@@ -70,8 +73,11 @@ int main() {
 	std::mt19937 gen(rd());
     // Ifølge dokumentationen for random_device er det ikke sikkert den er implementeret ved alle compilere endnu, så vi seeder lige med tiden oveni.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
+    int comps = 0;
+    int depth = 0;
 
-	std::cout << find(integers, integers.size()/3, gen) << std::endl;
+	std::cout << find(integers, integers.size()/3, gen, depth, comps) << std::endl;
+    std::cout << "comps: " << comps << " and depth: " << depth << std::endl;
 
 	return 0;
 }
