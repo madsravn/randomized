@@ -1,9 +1,16 @@
-\documentclass{report}
+\documentclass[article,a4paper,oneside]{memoir}
 %% Math stuffs
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{amssym}
 \usepackage{amsthm}
 \newtheorem{thm}{Theorem}
+
+%%We have quite a bit of math inline, so let's remove the paragraph indent and instead move it a bit down
+\parindent 0pt
+\parskip 4mm
 %% for easy Matrix notation
 \newcommand{\+}[1]{\ensuremath{\boldsymbol{#1}}}
 
@@ -12,5 +19,77 @@
 \usepackage{minted}
 
 \begin{document}
+\title{
+Randomized Algorithms Project 1\\
+Analysis and experiments with find and randomized quicksort
+}
 
+\author{
+  Mads Ravn - 19832001\\
+  Bo ``Metal-Bo'' Mortensen\\
+  Johan Abildskov - 20063623
+}
+
+\date{\today}
+
+\maketitle
+
+\newpage
+
+\tableofcontents*
+
+
+\chapter{Introduction}
+In the following report we will prove a bound on finding the $k$th smallest as well as show experiments relating to the theoretical bounds. We will do a similar experimentation for \emph{randomized QuickSort}.
+
+\chapter{\texttt{FIND}}
+In this section we look at the the problem of finding the $k$th smallest integer in a list $L$. That is given an unsorted list $L$, return the $k$th smallest element.
+The algorithm is given here:
+\begin{center}\begin{minipage}{5in}
+\underline{Algorithm: FIND}\\
+\begin{tabular}{ll}
+Input: & $L=[a_1,\ldots,a_n]$, a nonempty list of distinct numbers\\
+& $k$, an integer such that $1\leq k\leq n$.\\ 
+Output: & $b$, where $b\in L$ and $|\{a\in L:a\leq b\}|=k$\\
+Method:\\
+{\hfill}1. & Select $e$ randomly from $L$ using the uniform distribution\\
+{\hfill}2. & Split $L'=L-\{e\}$ into the two sublists\\
+& \ \ $L_1=[a_i\in L|a_i<e]$\\
+& and\\
+& \ \ $L_2=[a_i\in L|a_i>e]$\\
+& by comparing $e$ to each element of $L'$.\\
+{\hfill}3. & If $|L_1|=k-1$ then return $e$.\\
+& If $|L_1|>k-1$ then make a recursive call on $L_1$ and $k$.\\
+& \begin{minipage}{4in}
+If $|L_1|<k-1$ then make a recursive call on $L_2$ and $k-1-|L_1|$.
+\end{minipage}
+\end{tabular}
+\end{minipage}\end{center}
+As we can see the approach is quite similar to that of a randomized quicksort.
+We are following the suggested approach from the project description.
+\par
+
+Let $\pi$ be the unique permutation that sorts the elements of $L$,
+i.e. $a_{\pi(1)}<\cdots <a_{\pi(n)}$.  Define the indicator variables
+
+$$Z_{i}=\left\{\begin{array}{ll}
+1, & \mbox{
+\begin{minipage}[t]{4in}
+  if $a_{\pi(i)}$ is selected as the random element $e$ in line 1
+  during any of the recursive executions of FIND
+\end{minipage}
+}
+\\
+0, & \mbox{ otherwise}
+\end{array}\right.$$
+
+Define 
+
+$$Z=\sum_{i\neq k} Z_i$$
+
+First we're going to argue that $1+Z$ denotes the recursion depth during an execution of \texttt{FIND}. Each index in $Z_i$ that is set to $1$ as defined above represents an added layer in the recursion, as this represents that the element at some point was chosen as the pivot element around which we create the two lists, one of which we will recurse in. The additional $1$ comes from the fact that we have defined $Z$ as the sum of indicator variables, except for $i=k$. This element itself obviously represents the point at which we have chosen the $k$th element as our pivot, and this adds the last layer of our recursion.
+\par
+In order to show a bound on the time complexity of \texttt{FIND}, we need to look at how large $Z$ becomes. So we will show that $$Pr[Z_{i}]=\frac{1}{|k-i|+1}$$.
+\par
+Consider that permutation $\pi$ as described above. We will look at the probability that any $a_{\pi(i)}$ is selected in the execution of \texttt{FIND}. Without loss of generality we look only at $\pi(i) < \pi(k)$. Consider now the subset of elements $$S = \lbrace a_{\pi(i)},\cdots,a_{\pi(k)}\rbrace$$ it is seen that the element $a_{\pi(i)}$ will be chosen as a pivot element \emph{iff} it is the \emph{first} element of $S$ to be chosen. If another element is chosen from $S$ then $a_{\pi(i)}$ will end up in the list that the algorithm does not do recursive work in. As each element in $S$ is equally likely to be chosen and the size of $S$ is $|k - i| + 1$, the probability that $i$ will be chosen first is $\frac{1}{|k -1|}$. We have thus proved that $$Pr[Z_{i} = 1] = \frac{1}{|k-i|+1}$$.
 \end{document}
