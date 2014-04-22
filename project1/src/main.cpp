@@ -5,6 +5,10 @@
 #include <random>
 #include <iterator>
 #include <chrono>
+#include <cmath>
+#include "Timer.hpp"
+
+typedef unsigned long long uint64;
 
 template <class T>
 inline std::ostream& operator << (std::ostream& os, const std::vector<T>& v) 
@@ -37,7 +41,7 @@ std::vector<int> generate_integers(int size) {
 
 
 
-int find(std::vector<int> L, int k, std::mt19937& gen, int& depth, int& comparisons) {
+int find(std::vector<int> L, int k, std::mt19937& gen, uint64& depth, uint64& comparisons) {
 	std::vector<int> L1, L2;
 	++depth;
 
@@ -61,6 +65,7 @@ int find(std::vector<int> L, int k, std::mt19937& gen, int& depth, int& comparis
 	}
 }
 
+
 std::vector<int> quicksort(std::vector<int> L, std::mt19937& gen, int& depth, int& comparisons)
 {
 	std::vector<int> L1, L2;
@@ -82,6 +87,36 @@ std::vector<int> quicksort(std::vector<int> L, std::mt19937& gen, int& depth, in
 	return L1;
 
 }
+
+int testingonetwo(const int powerofn) {
+
+    for(int pon = 2; pon < powerofn+1; ++pon) {
+        int n = pow(10, pon);
+        std::vector<int> ks {1};
+        for(int i = 2; i < 10; ++i) {
+            ks.push_back((n/10)*i);
+        }
+        for(const auto& k : ks) {
+            std::random_device rd;
+            std::mt19937 gen(rd());
+
+            gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
+            uint64 comps = 0;
+            uint64 depth = 0;
+
+            std::vector<int> integers = generate_integers(n);
+            Timer t;
+            t.start();
+            find(integers, k, gen, depth, comps);
+            t.stop();
+            std::cout << "n: " << n << " and k: " << k << " took " << t.duration().count() << " ms and had depth: " << depth << " and comps: " << comps << std::endl;
+
+
+        }
+    }
+    return 1;
+}
+         
 int main() {
 
 
@@ -94,10 +129,15 @@ int main() {
     int comps = 0;
     int depth = 0;
 
-    std::cout << find(integers, integers.size()/3, gen, depth, comps) << std::endl;
-    std::cout << "comps: " << comps << " and depth: " << depth << std::endl;
+    //    std::cout << find(integers, integers.size()/3, gen, depth, comps) << std::endl;
+    //std::cout << "comps: " << comps << " and depth: " << depth << std::endl;
     comps = depth =0;
     std::cout << quicksort(integers, gen, depth, comps) << std::endl;
-    return 0;
+    std::cout << "comps: " << comps << " and depth: " << depth << std::endl;
+    comps = depth = 0;
+    //std::cout << find(integers, integers.size()/3, gen, depth, comps) << std::endl;
+    //std::cout << "comps: " << comps << " and depth: " << depth << std::endl; 
+    testingonetwo(5);
 
+    return 0;
 }
