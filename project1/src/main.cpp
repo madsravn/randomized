@@ -18,15 +18,13 @@ inline std::ostream& operator << (std::ostream& os, const std::vector<T>& v)
     return os;
 }
 
-//TODO: Lav en laaaaaang test og se hvorvidt det sker at to generate_integers lists er ens.
-// Måske regne på det med E[] og se om det passer overens
 std::vector<int> generate_integers(int size) {
     std::vector<int> vec(size);
-    int el = 1; 
+    int el = 1;
     std::generate_n(vec.begin(), vec.size(), [&](){return el++;});
-    
+
     std::random_device rd;
-	std::mt19937 gen(rd());
+    std::mt19937 gen(rd());
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
     std::uniform_int_distribution<> dis(100, 1000);
     int times = dis(gen);
@@ -41,17 +39,17 @@ std::vector<int> generate_integers(int size) {
 
 int find(std::vector<int> L, int k, std::mt19937& gen, int& depth, int& comparisons) {
 	std::vector<int> L1, L2;
-    ++depth;
+	++depth;
 
 	std::uniform_int_distribution<> dis(0, L.size()-1);
 
-    int pos = dis(gen);
+	int pos = dis(gen);
 	int e = L.at(pos);
-    L.erase(L.begin() + pos);
+	L.erase(L.begin() + pos);
 
 
 	std::partition_copy(std::begin(L), std::end(L), std::back_inserter(L1), std::back_inserter(L2), // true, false
-		[&](int i) {++comparisons; return i < e; });
+			[&](int i) {++comparisons; return i < e; });
 
 	if (L1.size() == (k - 1)) {
 		return e;
@@ -61,23 +59,45 @@ int find(std::vector<int> L, int k, std::mt19937& gen, int& depth, int& comparis
 	} else {
 		return find(L2, k - 1 - L1.size(), gen, depth, comparisons);
 	}
-	
 }
 
+std::vector<int> quicksort(std::vector<int> L, std::mt19937& gen, int& depth, int& comparisons)
+{
+	std::vector<int> L1, L2;
+	++depth;
+	if(L.size() <= 1)
+	{
+		return L;
+	}
+	std::uniform_int_distribution<> dis(0,L.size()-1);
+	int pos = dis(gen);
+	int  e = L.at(pos);
+	L.erase(L.begin() + pos);
+	std::partition_copy(std::begin(L), std::end(L), std::back_inserter(L1), std::back_inserter(L2), 
+			[&](int i){++comparisons; return i<e;});
+	L1 = quicksort(L1, gen, depth, comparisons);
+        L1.push_back(e);
+	L2 = quicksort(L2, gen, depth, comparisons);
+	L1.insert(L1.end(), L2.begin(), L2.end());
+	return L1;
+
+}
 int main() {
 
 
     std::vector<int> integers = generate_integers(100);
 
-	std::random_device rd;
-	std::mt19937 gen(rd());
+    std::random_device rd;
+    std::mt19937 gen(rd());
     // Ifølge dokumentationen for random_device er det ikke sikkert den er implementeret ved alle compilere endnu, så vi seeder lige med tiden oveni.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
     int comps = 0;
     int depth = 0;
 
-	std::cout << find(integers, integers.size()/3, gen, depth, comps) << std::endl;
+    std::cout << find(integers, integers.size()/3, gen, depth, comps) << std::endl;
     std::cout << "comps: " << comps << " and depth: " << depth << std::endl;
+    comps = depth =0;
+    std::cout << quicksort(integers, gen, depth, comps) << std::endl;
+    return 0;
 
-	return 0;
 }
