@@ -117,6 +117,8 @@ int testingonetwo(const int powerofn) {
     return 1;
 }
 
+
+//TODO: ATLEAST N, PREFERABLY MORE
 int test_k_runs(const int powerofn)
 {
 	for(int pon = 2; pon < powerofn+1;++pon)
@@ -136,6 +138,7 @@ int test_k_runs(const int powerofn)
 			{
 				uint64 comps = 0;
 				uint64 depth = 0;
+                //TODO: Timeren bliver brugt forkert her
 				Timer ft;
 				ft.start();
 				find(currentlist, k, depth, comps);
