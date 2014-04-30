@@ -25,7 +25,7 @@ Analysis and experiments with randomized kth find and randomized quicksort
 }
 
 \author{
-  Mads Ravn - 19832001\\
+  Mads Ravn - 20071580\\
   Bo ``Metal-Bo'' Mortensen\\
   Johan Abildskov - 20063623
 }
@@ -116,10 +116,17 @@ Argue that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent (and, similarly, $Z_{k+1}
 \subsection{Subproblem 1.5}
 Prove that $\Pr (Z > 2\mu)\leq 2n^{-c}$.
 \\
-From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \cdots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
+From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \ldots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
 
 $$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right ]^\mu$$
 
+\begin{align*}
+  Pr( Z > 2\mu) & <  \left[ \frac{e^1}{(1+1)^{1+1}} \right] ^{\ln n} \\
+  &= \frac{e^{\ln n}}{4^{\ln n}}\\ 
+  &= \frac {n}{e^{\ln(4)\ln(n)}} \\
+  &= \frac{n}{n^{\ln(4)}}\\
+  &= n^{1-\ln (4)}\\
+\end{align*}
 $\Pr \left ( Z > 2\mu \right ) < \left [ \frac{e^1}{(1+1)^{1+1}} \right ]^{\ln n}
 \\= \frac{e^{\ln n}}{4^{\ln n}} 
 \\= \frac {n}{e^{\ln(4)\ln(n)}} 
