@@ -97,18 +97,17 @@ Consider that permutation $\pi$ as described above. We will look at the probabil
 
 \subsection{Subproblem 1.3} 
 Prove that $E[Z]\leq \mu = 2\ln n$.\\
-\textbf{Bedre align og rette sum-grænserne}
 For any $k, 0<k<n$ we have that $Z = \sum_{i=1}^{n} \frac{1}{|k-i|+1}$.
 This gives cause to the following:
 
-%\begin{align*}
-$E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
+\begin{align*}
+E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
 \\ \leq \sum_{i=1}^{k} \frac{1}{i+1} + \sum_{i=1}^{n} \frac{1}{i+1}
 \\ \leq \sum_{i=1}^{k} \frac{1}{i+1} + \sum_{i=1}^{k} \frac{1}{i+1}
 \\ = 2\sum_{i=1}^{k} \frac{1}{i+1}
 \\ = 2H_n
-\\ \approx 2lnn \qedhere$
-%\end{align*}
+\\ \approx 2lnn \qedhere
+\end{align*}
 
 \subsection{Subproblem 1.4}
 Argue that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent (and, similarly, $Z_{k+1}, Z_{k+2}, \cdots, Z_n$ are independent).
