@@ -25,7 +25,7 @@ Analysis and experiments with randomized kth find and randomized quicksort
 }
 
 \author{
-  Mads Ravn - 19832001\\
+  Mads Ravn - 20071580\\
   Bo ``Metal-Bo'' Mortensen\\
   Johan Abildskov - 20063623
 }
@@ -102,10 +102,8 @@ This gives cause to the following:
 
 \begin{align*}
 E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
-\\ \leq \sum_{i=1}^{k} \frac{1}{i+1} + \sum_{i=1}^{n} \frac{1}{i+1}
-\\ \leq \sum_{i=1}^{k} \frac{1}{i+1} + \sum_{i=1}^{k} \frac{1}{i+1}
 \\ = 2\sum_{i=1}^{k} \frac{1}{i+1}
-\\ = 2H_n
+\\ = 2H_n--
 \\ \approx 2lnn \qedhere
 \end{align*}
 
@@ -115,10 +113,17 @@ Argue that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent (and, similarly, $Z_{k+1}
 \subsection{Subproblem 1.5}
 Prove that $\Pr (Z > 2\mu)\leq 2n^{-c}$.
 \\
-From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \cdots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
+From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \ldots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
 
-$$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right ]^\mu$$
+XS$$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right ]^\mu$$
 
+\begin{align*}
+  Pr( Z > 2\mu) & <  \left[ \frac{e^1}{(1+1)^{1+1}} \right] ^{\ln n} \\
+  &= \frac{e^{\ln n}}{4^{\ln n}}\\ 
+  &= \frac {n}{e^{\ln(4)\ln(n)}} \\
+  &= \frac{n}{n^{\ln(4)}}\\
+  &= n^{1-\ln (4)}\\
+\end{align*}
 $\Pr \left ( Z > 2\mu \right ) < \left [ \frac{e^1}{(1+1)^{1+1}} \right ]^{\ln n}
 \\= \frac{e^{\ln n}}{4^{\ln n}} 
 \\= \frac {n}{e^{\ln(4)\ln(n)}} 
@@ -135,39 +140,13 @@ $E[X] \leq \mu_s = 2n\ln n$
 \\\\
 $\Pr (X > 3\mu_s) \leq 2n^{-d}$
 
-Jeg aner ikke hvad jeg laver, men her er noget math der har et sært resultat.
-
-Markov inequality:
-$
-\\1.\ \Pr[Y\geq t]\leq \frac{E[Y]}{t} \\
-\Pr[X > 3\mu_s] < \frac{E[X]}{3\mu_s}\leq \frac{\mu_s}{3\mu_s} = \frac{1}{3}\\
-$
-$$
-n \cdot \Pr[Z > 3\mu] < n\cdot \frac{E[Z]}{3\mu}\leq n\cdot \frac{\mu}{3\mu} = n\cdot \frac{1}{3}
-$$
-$$
-\Pr[X>3\mu_s]<\frac{E[X]}{3\mu_s}\leq \frac{\mu_s}{3\mu_s}=\frac{1}{3}
-$$
-
-Chernoff bound:
-$$
-\Pr[X > 3\mu_s]\leq n\cdot \Pr(Z > 3\mu)
-$$
-$$
-\left [\frac{e^2 }{3^3}\right ]^{\mu_s}\leq n\cdot\left [\frac{e^2 }{3^3}\right ]^\mu\\
-$$
-$$
-t^{\mu_s}\leq n\cdot t^\mu\\
-$$
-$$
-t^{n\cdot\mu}\leq n\cdot t^\mu\\
-$$
-$$
-t^{n}\cdot t^\mu\leq n\cdot t^\mu\\
-$$
-$$
-t^{n}\leq n\\
-$$
+$n\cdot \Pr[Z>3\mu]\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
+=n\cdot\frac{e^{4\ln n}}{9^{2\ln n}}\\
+=\frac{n^5}{9^{2\ln n}}\\
+=\frac{n^5}{e^{\ln 9 \ln n^2}}\\
+=\frac{n^5}{n^{2\ln 9}}\\
+=\frac{n^5}{n^{\ln 9}n^{\ln 9}}\\
+=n^{5-2\ln 9}$
 \subsection{Subproblem 1.8}
 
 
