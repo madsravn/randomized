@@ -161,6 +161,12 @@ int main(int argc, char* argv[]) {
 
     // Ifølge dokumentationen for random_device er det ikke sikkert den er implementeret ved alle compilere endnu, så vi seeder lige med tiden oveni.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
+    if(argc != 3)
+      {
+	std::cout << "Wrong number of params" << std::endl;
+	std::cout << "Usage: randAlg <powers of n> <number of runs>" << std::endl;
+	return 1;
+      }
     int pon = atoi(argv[1]);
     int runs = atoi(argv[2]);
     test_k_runs(pon,runs);
