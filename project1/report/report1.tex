@@ -25,7 +25,7 @@ Analysis and experiments with randomized kth find and randomized quicksort
 }
 
 \author{
-  Mads Ravn - 19832001\\
+  Mads Ravn - 20071580\\
   Bo ``Metal-Bo'' Mortensen\\
   Johan Abildskov - 20063623
 }
@@ -94,21 +94,19 @@ In order to show a bound on the time complexity of \texttt{FIND}, we need to loo
 Consider that permutation $\pi$ as described above. We will look at the probability that any $a_{\pi(i)}$ is selected in the execution of \texttt{FIND}. Without loss of generality we look only at $\pi(i) < \pi(k)$. Consider now the subset of elements $$S = \lbrace a_{\pi(i)},\cdots,a_{\pi(k)}\rbrace$$ it is seen that the element $a_{\pi(i)}$ will be chosen as a pivot element \emph{iff} it is the \emph{first} element of $S$ to be chosen. If another element is chosen from $S$ then $a_{\pi(i)}$ will end up in the list that the algorithm does not do recursive work in. As each element in $S$ is equally likely to be chosen and the size of $S$ is $|k - i| + 1$, the probability that $i$ will be chosen first is $\frac{1}{|k -1|}$. We have thus proved that $$Pr[Z_{i} = 1] = \frac{1}{|k-i|+1}$$
 
 
+\textbf{Gør det lige tydeligt hvor vi svarer opgave 1.1 og 1.2}
 
 \subsection{Subproblem 1.3} 
 Prove that $E[Z]\leq \mu = 2\ln n$.\\
-\textbf{Bedre align og rette sum-grænserne}
 For any $k, 0<k<n$ we have that $Z = \sum_{i=1}^{n} \frac{1}{|k-i|+1}$.
-This gives cause to the following:
+This gives cause to the following: \textbf{Jeg tror ikke vi kan bruge ilig tegn mellem summe og harmoniske numre}
 
-%\begin{align*}
-$E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
-\\ \leq \sum_{i=1}^{k-1} \frac{1}{i} + \sum_{i=k+1}^{n} \frac{1}{i}
-\\ \leq \sum_{i=1}^{k-1} \frac{1}{i} + \sum_{i=1}^{k-1} \frac{1}{i}
+\begin{align*}
+E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
 \\ = 2\sum_{i=1}^{k} \frac{1}{i+1}
-\\ = 2H_n
-\\ \approx 2lnn \qedhere$
-%\end{align*}
+\\ = 2H_n--
+\\ \approx 2lnn \qedhere
+\end{align*}
 
 \subsection{Subproblem 1.4}
 Argue that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent (and, similarly, $Z_{k+1}, Z_{k+2}, \cdots, Z_n$ are independent).
@@ -116,20 +114,27 @@ Argue that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent (and, similarly, $Z_{k+1}
 \subsection{Subproblem 1.5}
 Prove that $\Pr (Z > 2\mu)\leq 2n^{-c}$.
 \\
-From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \cdots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
+From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \ldots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
 
-$$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right ]^\mu$$
+XS$$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right ]^\mu$$
 
-$\Pr \left ( Z > 2\mu \right ) < \left [ \frac{e^1}{(1+1)^{1+1}} \right ]^{\ln n}
-\\= \frac{e^{\ln n}}{4^{\ln n}} 
-\\= \frac {n}{e^{\ln(4)\ln(n)}} 
-\\= \frac{n}{n^{\ln(4)}}
-\\= n^{1-\ln (4)}$\\
-$ c=\ln(4)-1$
+\begin{align*}
+  Pr( Z > 2\mu) & <  \left[ \frac{e^1}{(1+1)^{1+1}} \right] ^{\ln n} \\
+  &= \frac{e^{\ln n}}{4^{\ln n}}\\ 
+  &= \frac {n}{e^{\ln(4)\ln(n)}} \\
+  &= \frac{n}{n^{\ln(4)}}\\
+  &= n^{1-\ln (4)}\\
+\end{align*}
+\textbf{Konklusion med } $ c=\ln(4)-1$
 
 
 
 \subsection{Subproblem 1.6}
+
+\textbf{For each n, k pair you should run a large number of experiments (at least, pref more).}
+\textbf{Når vi når hertil, så formater lige opgavestillingen lidt bedre}
+
+\chapter{\texttt{QUICKSORT}}
 
 \subsection{Subproblem 1.7}
 $E[X] \leq \mu_s = 2n\ln n$
