@@ -136,13 +136,22 @@ $E[X] \leq \mu_s = 2n\ln n$
 \\\\
 $\Pr (X > 3\mu_s) \leq 2n^{-d}$
 
-$n\cdot \Pr[Z>3\mu]\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
-=n\cdot\frac{e^{4\ln n}}{9^{2\ln n}}\\
-=\frac{n^5}{9^{2\ln n}}\\
-=\frac{n^5}{e^{\ln 9 \ln n^2}}\\
-=\frac{n^5}{n^{2\ln 9}}\\
-=\frac{n^5}{n^{\ln 9}n^{\ln 9}}\\
-=n^{5-2\ln 9}$
+$n\cdot \Pr[Z>3\mu]\leq n\cdot \left [ \frac{e^2}{3^3} \right ]^{2\ln n}\\
+=n\cdot\frac{e^{4\ln n}}{27^{2\ln n}}\\
+=\frac{n^5}{27^{2\ln n}}\\
+=\frac{n^5}{e^{\ln 27 \ln n^2}}\\
+=\frac{n^5}{n^{2\ln 27}}\\
+=\frac{n^5}{n^{\ln 27}n^{\ln 27}}\\
+=n^{5-2\ln 27}$
+
+
+$\Pr[X>3\mu_s]\leq \left [ \frac{e^2}{3^3} \right ]^{2n\ln n}\\
+=\frac{e^{4n\ln n}}{27^{2n\ln n}}\\
+=\frac{n^{4n}}{e^{\ln 27\cdot 2n\ln n}}\\
+=\frac{n^{4n}}{n^{\ln 27\cdot 2n}}\\
+=n^{4n-\ln(27)\cdot 2n}\\
+=n^{n(4-2\ln 27)}\\
+=n^{n(4-\ln 27^2)}$
 \subsection{Subproblem 1.8}
 
 
