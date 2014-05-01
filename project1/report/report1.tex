@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{todonotes}
 \newtheorem{thm}{Theorem}
 
 %%We have quite a bit of math inline, so let's remove the paragraph indent and instead move it a bit down
@@ -26,7 +27,7 @@ Analysis and experiments with randomized kth find and randomized quicksort
 
 \author{
   Mads Ravn - 20071580\\
-  Bo ``Metal-Bo'' Mortensen\\
+  Bo ``Metal-Bo'' Mortensen - 20073241\\
   Johan Abildskov - 20063623
 }
 
@@ -94,12 +95,12 @@ In order to show a bound on the time complexity of \texttt{FIND}, we need to loo
 Consider that permutation $\pi$ as described above. We will look at the probability that any $a_{\pi(i)}$ is selected in the execution of \texttt{FIND}. Without loss of generality we look only at $\pi(i) < \pi(k)$. Consider now the subset of elements $$S = \lbrace a_{\pi(i)},\cdots,a_{\pi(k)}\rbrace$$ it is seen that the element $a_{\pi(i)}$ will be chosen as a pivot element \emph{iff} it is the \emph{first} element of $S$ to be chosen. If another element is chosen from $S$ then $a_{\pi(i)}$ will end up in the list that the algorithm does not do recursive work in. As each element in $S$ is equally likely to be chosen and the size of $S$ is $|k - i| + 1$, the probability that $i$ will be chosen first is $\frac{1}{|k -1|}$. We have thus proved that $$Pr[Z_{i} = 1] = \frac{1}{|k-i|+1}$$
 
 
-\textbf{Gør det lige tydeligt hvor vi svarer opgave 1.1 og 1.2}
+\todo{Del op i 1.1 og 1.2}
 
 \subsection{Subproblem 1.3} 
 Prove that $E[Z]\leq \mu = 2\ln n$.\\
 For any $k, 0<k<n$ we have that $Z = \sum_{i=1}^{n} \frac{1}{|k-i|+1}$.
-This gives cause to the following: \textbf{Jeg tror ikke vi kan bruge ilig tegn mellem summe og harmoniske numre}
+This gives cause to the following: \todo{Jeg tror ikke vi kan bruge ligheds tegn til harmoniske numre}
 
 \begin{align*}
 E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
@@ -110,13 +111,15 @@ E[Z] = \sum_{i=1}^{n} \frac{1}{|k-i|+1}
 
 \subsection{Subproblem 1.4}
 Argue that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent (and, similarly, $Z_{k+1}, Z_{k+2}, \cdots, Z_n$ are independent).
-
+\par
+To show that $Z_i$ and $Z_j$ are independent for $i,j < k$, consider the case $Z_i = 1$. This means that in the interval $\mathbb{I} = [Z_i,..,Z_k]$, $Z_i$ was the first to be chosen as the random pivot element.
+For any $Z_j, j \neq i$ we're considering the interval $\mathbb{J} = [Z_j,\ldots, Z_k]$, as $i \neq j \Rightarrow \mathbb{I} \neq \mathbb{J}$, we invoke the \emph{Principle of deferred decisions} and see that the two intervals are not related, and thus the choice of $Z_i$ and $Z_j$ is independent.
 \subsection{Subproblem 1.5}
 Prove that $\Pr (Z > 2\mu)\leq 2n^{-c}$.
 \\
 From (1.4) we have that $Z_1, Z_2, \ldots, Z_{k-1}$ are independent and $Z_{k+1}, Z_{k+2}, \ldots, Z_n$ are independent, and as such, the Chernoff bound technique can be applied in this situation.
 
-XS$$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right ]^\mu$$
+$$\Pr \left( X > (1+\delta)\mu \right) < \left[ \frac{e^\delta}{(1+\delta)^{1+\delta}} \right]^\mu$$
 
 \begin{align*}
   Pr( Z > 2\mu) & <  \left[ \frac{e^1}{(1+1)^{1+1}} \right] ^{\ln n} \\
@@ -131,8 +134,8 @@ XS$$\Pr \left ( X > (1+\delta)\mu \right ) < \left [ \frac{e^\delta}{(1+\delta)^
 
 \subsection{Subproblem 1.6}
 
-\textbf{For each n, k pair you should run a large number of experiments (at least, pref more).}
-\textbf{Når vi når hertil, så formater lige opgavestillingen lidt bedre}
+\todo{For each n, k pair you should run a large number of experiments (at least, pref more).}
+\todo{Når vi når hertil, så formater lige opgavestillingen lidt bedre}
 
 \chapter{\texttt{QUICKSORT}}
 
@@ -150,5 +153,6 @@ $n\cdot \Pr[Z>3\mu]\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
 =n^{5-2\ln 9}$
 \subsection{Subproblem 1.8}
 
-
+\subsection{Implementation and Experiments}
+\todo{Write something about this}
 \end{document}
