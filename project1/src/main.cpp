@@ -119,7 +119,7 @@ int testingonetwo(const int powerofn) {
 
 
 //TODO: ATLEAST N, PREFERABLY MORE
-int test_k_runs(const int powerofn)
+int test_k_runs(const int powerofn, const int runs)
 {
 	for(int pon = 2; pon < powerofn+1;++pon)
 	{
@@ -130,7 +130,7 @@ int test_k_runs(const int powerofn)
 		{
 			ks.push_back((n/10)*i);
 		}
-		for(const auto& i : ks)
+		for(int i = 0;i<runs;++i)
 		{
 
 			//For each k lists, run through the list for each k.
@@ -156,12 +156,19 @@ int test_k_runs(const int powerofn)
 	}
 	return 1;
 }
-int main() {
+int main(int argc, char* argv[]) {
 
 
     // Ifølge dokumentationen for random_device er det ikke sikkert den er implementeret ved alle compilere endnu, så vi seeder lige med tiden oveni.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
-
-    test_k_runs(4);
+    if(argc != 3)
+      {
+	std::cout << "Wrong number of params" << std::endl;
+	std::cout << "Usage: randAlg <powers of n> <number of runs>" << std::endl;
+	return 1;
+      }
+    int pon = atoi(argv[1]);
+    int runs = atoi(argv[2]);
+    test_k_runs(pon,runs);
     return 0;
 }
