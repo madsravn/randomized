@@ -1,0 +1,8 @@
+1000 quicksorts took    647ms.   on n=100       Average time:   0.647
+Fastest time:   0       Slowest time:   2
+1000 quicksorts took    11507ms.         on n=1000      Average time:   11.507
+Fastest time:   4       Slowest time:   23
+1000 quicksorts took    195648ms.        on n=10000     Average time:   195.648
+Fastest time:   43      Slowest time:   462
+1000 quicksorts took    690869ms.        on n=100000    Average time:   690.869
+Fastest time:   478     Slowest time:   1277
