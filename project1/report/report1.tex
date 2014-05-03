@@ -143,26 +143,16 @@ The exact same thing applies for $B$ and now we have $\Pr ( Z > 2\mu)$ expressed
 \chapter{\texttt{QUICKSORT}}
 
 \subsection{Subproblem 1.7}
-$E[X] \leq \mu_s = 2n\ln n$
-\\\\
-$\Pr (X > 3\mu_s) \leq 2n^{-d}$
+Let $X$ denote the number of comparisons made by randomized \texttt{QUICKSORT} on an input of length $n$. We know that $E[X] \leq \mu_s = 2n\ln n$. Prove that the probability that the number of comparisons made in an execcution of randomized \texttt{QUICKSORT} exceeds $3\mu_s$ is at most $2n^{-d}$ for as large a constant $d$ as you can. 
 
-$n\cdot \Pr[Z>3\mu]\leq n\cdot \left [ \frac{e^2}{3^3} \right ]^{2\ln n}\\
-=n\cdot\frac{e^{4\ln n}}{27^{2\ln n}}\\
-=\frac{n^5}{27^{2\ln n}}\\
-=\frac{n^5}{e^{\ln 27 \ln n^2}}\\
-=\frac{n^5}{n^{2\ln 27}}\\
-=\frac{n^5}{n^{\ln 27}n^{\ln 27}}\\
-=n^{5-2\ln 27}$
+\todo{Forklar den egentlige ulighed og hvorfor den gælder}
 
-
-$\Pr[X>3\mu_s]\leq \left [ \frac{e^2}{3^3} \right ]^{2n\ln n}\\
-=\frac{e^{4n\ln n}}{27^{2n\ln n}}\\
-=\frac{n^{4n}}{e^{\ln 27\cdot 2n\ln n}}\\
-=\frac{n^{4n}}{n^{\ln 27\cdot 2n}}\\
-=n^{4n-\ln(27)\cdot 2n}\\
-=n^{n(4-2\ln 27)}\\
-=n^{n(4-\ln 27^2)}$
+\begin{align*}
+n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
+=n\cdot\frac{e^{4\ln n}}{9^{2\ln n}} &=\frac{n^5}{9^{2\ln n}} =\frac{n^5}{e^{\ln 9 \ln n^2}}\\
+=\frac{n^5}{n^{2\ln 9}} &=\frac{n^5}{n^{\ln 9}n^{\ln 9}} =n^{5-2\ln 9}
+\end{align*}
+\todo{Pænere alignment}
 \subsection{Subproblem 1.8}
 
 \subsection{Implementation and Experiments}
