@@ -139,7 +139,20 @@ The exact same thing applies for $B$ and now we have $\Pr ( Z > 2\mu)$ expressed
 
 {\bf 1.6 \ Subproblem} Implement the FIND algorithm and run it on a
 representative set of test inputs. 
-
+The algorithm \texttt{FIND} has been implemented in \texttt{C++11} and compiled with \texttt{clang} on a Linux machine with the optimization flag \texttt{-O3}.
+\par
+We have generated random lists of up to \todo{Hvor stort har vi naaet at lave?} and have run the algorithm 10000 for each $k \in left{\frac{1}{n}, \frac{2}{n}, \ldots, n\right}$. The results can be seen in \ref{table:find}.
+\begin{center}
+\begin{tabular}{| c | c | c | c | c | c |}
+\hline
+\emph{n} & Avg. depth & Max depth & Avg. Comp. & Max Comp. & $2lnn$\\ \hline
+$10^2$ & 6 & 20 & 246 & 791 & 9.21 \\ \hline
+$10^3$ & 10 & 28 & 2675 & 9597 & 13.81 \\ \hline
+$10^4$ & 14 & 37 & 27115 & 93935 & 18.42\\ \hline
+\end{tabular}	
+\caption{Depth and Comparisons in \texttt{FIND}}
+\label{table:find}
+\end{center}
 \todo{For each n, k pair you should run a large number of experiments (at least, pref more).}
 \todo{Når vi når hertil, så formater lige opgavestillingen lidt bedre}
 
