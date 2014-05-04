@@ -43,7 +43,7 @@ Analysis and experiments with randomized kth find and randomized quicksort
 In the following report we will prove a bound on finding the $k$th smallest as well as show experiments relating to the theoretical bounds. We will do a similar experimentation for \emph{randomized QuickSort}.
 
 \subsection*{\texttt{FIND}}
-In this section we look at the the problem of finding the $k$th smallest integer in a list $L$. That is, given an unsorted list $L$, return the $k$th smallest element.
+In this section we look at the problem of finding the $k$th smallest integer in a list $L$. That is, given an unsorted list $L$, return the $k$th smallest element.
 The algorithm is given here:
 \begin{center}\begin{minipage}{5in}
 \underline{Algorithm: FIND}\\
@@ -176,7 +176,7 @@ $$X_{ij}=\left\{\begin{array}{ll}
 0, & \mbox{ otherwise}
 \end{array}\right.$$
 
-We then have $X = \sum_{i \neq j} X_{ij} = \sum_j \left( \sum_{i \neq j} X_{ij} \right)$. We notice that the inner sum, $ \sum_{i \neq j} X_{ij}$, is the amount of pivot elements chosen and can be compared to the amount of pivot elements chosen in \texttt{FIND}. So we can see there is a correlation between $Z$ and $X$. The outer sum, $\sum_j$, translates to a factor $n$ on the inner sum. Each time a pivot element is chosen in \texttt{QUICKSORT} up to $n$ comparisons are made. With this in mind we notice that $\Pr(X>3\mu_s)\leq n\cdot\Pr(Z>3\mu)$ holds because that while $Pr(X > 3\mu_s)$ and $Pr(Z > 3\mu)$ are rougly equal the added factor $n$ makes the inequality hold. We now find the upper bound of $Pr(Z > 3\mu)$ and apply it to our \texttt{QUICKSORT}:
+We then have $X = \sum_{i \neq j} X_{ij} = \sum_j \left( \sum_{i \neq j} X_{ij} \right)$. We notice that the inner sum, $ \sum_{i \neq j} X_{ij}$, is the amount of pivot elements chosen and can be compared to the amount of pivot elements chosen in \texttt{FIND}. So we can see there is a correlation between $Z$ and $X$. The outer sum, $\sum_j$, translates to a factor $n$ on the inner sum. Each time a pivot element is chosen in \texttt{QUICKSORT} up to $n$ comparisons are made. With this in mind we notice that $\Pr(X>3\mu_s)\leq n\cdot\Pr(Z>3\mu)$ holds because that while $Pr(X > 3\mu_s)$ and $Pr(Z > 3\mu)$ are roughly equal the added factor $n$ makes the inequality hold. We now find the upper bound of $Pr(Z > 3\mu)$ and apply it to our \texttt{QUICKSORT}:
 
 \begin{align*}
 n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
@@ -194,7 +194,7 @@ For our pseudo-random numbers we have used the C++11 implementation of the Merse
 
 Our \texttt{FIND} method uses the Standard Library partition\_copy method combined with a lambda expression to partition the list over into two lists with the condition that $i$ is either bigger or smaller than the randomly chosen element $e$.
 
-When generating a random list of integers we first generate a list containing $1,2,\ldots, n-1,n$ elements utilizing generate\_n and a lambda expression and then we randomly shuffle them using the Standard Library shuffle function in conjunction with our mersenne twister engine. This way we make sure we only have unique elements in our list. Seeing as the randomness of this list is not so important because we are randomly chosing an element from it we only regenerate the list once we need one of another size.
+When generating a random list of integers we first generate a list containing $1,2,\ldots, n-1,n$ elements utilizing generate\_n and a lambda expression and then we randomly shuffle them using the Standard Library shuffle function in conjunction with our mersenne twister engine. This way we make sure we only have unique elements in our list. Seeing as the randomness of this list is not so important because we are randomly choosing an element from it we only regenerate the list once we need one of another size.
 
 \todo{Write something about this}
 \end{document}
