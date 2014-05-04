@@ -27,7 +27,7 @@ Analysis and experiments with randomized kth find and randomized quicksort
 
 \author{
   Mads Ravn - 20071580\\
-  Bo ``Metal-Bo'' Mortensen - 20073241\\
+  Bo Mortensen - 20073241\\
   Johan Abildskov - 20063623
 }
 
@@ -149,10 +149,12 @@ Let $X$ denote the number of comparisons made by randomized \texttt{QUICKSORT} o
 
 \begin{align*}
 n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
-=n\cdot\frac{e^{4\ln n}}{9^{2\ln n}} &=\frac{n^5}{9^{2\ln n}} =\frac{n^5}{e^{\ln 9 \ln n^2}}\\
-=\frac{n^5}{n^{2\ln 9}} &=\frac{n^5}{n^{\ln 9}n^{\ln 9}} =n^{5-2\ln 9}
+&=n\cdot\frac{e^{4\ln n}}{9^{2\ln n}} =\frac{n^5}{9^{2\ln n}}\\
+&=\frac{n^5}{e^{\ln 9 \ln n^2}} =\frac{n^5}{n^{2\ln 9}}\\
+&=\frac{n^5}{n^{\ln 9}n^{\ln 9}} =n^{5-2\ln 9}
 \end{align*}
-\todo{Pænere alignment}
+
+\todo{Skriv en konklusion til den udregning - hvad er d f.eks}
 \subsection{Subproblem 1.8}
 
 \subsection{Implementation and Experiments}
