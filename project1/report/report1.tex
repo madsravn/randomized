@@ -188,7 +188,7 @@ n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
 We know have an upper bound for half of the quicksort algorithm seeing that it will be split into two recursively. Doubling the upper bound will result in the upper bound for quicksort. With this in mind we have that $Pr(Z > 3\mu)$ is upper bounded by $2n^{5-2\ln(9)}$ and thusly we find that $\underline{d = 2\ln(9) - 5}$.
 
 
-{\bf 1.9 \ Implementation and experiments}
+{\bf 1.9 \ Implementation}
 
 For our pseudo-random numbers we have used the C++11 implementation of the Mersenne Twister algorithm, the std::mersenne\_twister\_engine. Reference: \url{ http://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine}. We are using a uniform\_int\_distribution to find a random number in a given range. 
 
