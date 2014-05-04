@@ -150,8 +150,19 @@ comparisons made in an execution of randomized QUICKSORT exceeds
 $3\mu_s$ is at most $2n^{-d}$ for as large a constant $d$ as you can.
 Hint: Show that $\Pr(X>3\mu_s)\leq n\cdot\Pr(Z>3\mu)$.
 
+The initial inequality $\Pr(X>3\mu_s)\leq n\cdot\Pr(Z>3\mu)$ can be explained by having an indicator variable
 
-\todo{Forklar den egentlige ulighed og hvorfor den gælder}
+$$X_{ij}=\left\{\begin{array}{ll}
+1, & \mbox{
+\begin{minipage}[t]{4in}
+  if $i$ is selected as a pivot element and if i and j are compared to each other 
+\end{minipage}
+}
+\\
+0, & \mbox{ otherwise}
+\end{array}\right.$$
+
+We then have $X = \sum_{i \neq j} X_{ij} = \sum_j \left( \sum_{i \neq j} X_{ij} \right)$. We notice that the inner sum, $ \sum_{i \neq j} X_{ij}$, is the amount of pivot elements chosen and can be compared to the amount of pivot elements chosen in \texttt{FIND}. So we can see there is a correlation between $Z$ and $X$. The outer sum, $\sum_j$, translates to a factor $n$ on the inner sum. Each time a pivot element is chosen in \texttt{QUICKSORT} up to $n$ comparisons are made. With this in mind we notice that $\Pr(X>3\mu_s)\leq n\cdot\Pr(Z>3\mu)$ holds because that while $Pr(X > 3\mu_s)$ and $Pr(Z > 3\mu)$ are rougly equal the added factor $n$ makes the inequality hold. We now find the upper bound of $Pr(Z > 3\mu)$ and apply it to our \texttt{QUICKSORT}:
 
 \begin{align*}
 n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
@@ -160,7 +171,7 @@ n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
 &=\frac{n^5}{n^{\ln 9}n^{\ln 9}} =n^{5-2\ln 9}
 \end{align*}
 
-\todo{Skriv en konklusion til den udregning - hvad er d f.eks}
+We know have an upper bound for half of the quicksort algorithm seeing that it will be split into two recursively. Doubling the upper bound will result in the upper bound for quicksort. With this in mind we have that $Pr(Z > 3\mu)$ is upper bounded by $2n^{5-2\ln(9)}$ and thusly we find that $\underline{d = 2\ln(9) - 5}$.
 
 {\bf 1.8 \ Subproblem} (Extra credit - do not try to do this unless
 you have completed all other parts of this project) Prove
