@@ -140,11 +140,13 @@ The exact same thing applies for $B$ and now we have $\Pr ( Z > 2\mu)$ expressed
 representative set of test inputs. 
 The algorithm \texttt{FIND} has been implemented in \texttt{C++11} and compiled with \texttt{clang} on a Linux machine with the optimization flag \texttt{-O3}.
 \par
-We have generated random lists of up to \todo{Hvor stort har vi naaet at lave?} and have run the algorithm 10000 times  for each $k \in \lbrace 1, \frac{1}{10}n, \frac{2}{10}n, \ldots, n\rbrace$. The results can be seen in \ref{table:find}.
+We have generated random lists of up to $10^5$ elements and have run the algorithm $10^6$ times  for each $k \in \lbrace 1, \frac{1}{10}n, \frac{2}{10}n, \ldots, n\rbrace$. The results can be seen in \ref{fig:qs}.
 As can be seen from the table, the experimental results do not exceed the bounds given previously. The experimental results are indeed quite a bit below the bounds given. This could come from the fact that we introduce a lot of slack in the definition to obtain the nice looking bound, and it therefore is less tight.
 
 \begin{center}
 \begin{figure}
+\caption{Results from running \texttt{FIND}}
+\label{fig:qs}
 \begin{tabular}{| c | c | c | c | c | c |}
 \hline
 \emph{n} & Avg. depth & Max depth & Avg. Comp. & Max Comp. & $2lnn$\\ \hline
@@ -152,10 +154,8 @@ $10^2$ & 6 & 20 & 246 & 791 & 9.21 \\ \hline
 $10^3$ & 10 & 28 & 2675 & 9597 & 13.81 \\ \hline
 $10^4$ & 14 & 37 & 27115 & 93935 & 18.42\\ \hline
 \end{tabular}	
-\label{table:find}
 \end{figure}
 \end{center}
-\todo{Add caption}
 Below is graphs of the occurrence count for each depth in the runs of \texttt{FIND}.
 We present graphs for $10^3$, $10^4$ and $10^5$. As can be seen from the graphs, the probability for any depth occuring decreases the further away from the average it is. This is consistent with the low probability that we will get depths that are much larger than expected value of $Z$.
 \begin{center}
@@ -195,21 +195,23 @@ n\cdot \Pr[Z>3\mu] &\leq n\cdot \left [ \frac{e^2}{3^2} \right ]^{2\ln n}\\
 
 We know have an upper bound for half of the quicksort algorithm seeing that it will be split into two recursively. Doubling the upper bound will result in the upper bound for quicksort. With this in mind we have that $Pr(Z > 3\mu)$ is upper bounded by $2n^{5-2\ln(9)}$ and thusly we find that $\underline{d = 2\ln(9) - 5}$.
 \par
-We have run the same experiments as for the \texttt{FIND} algorithm. The results can be seen in \ref{table:quicksort}.
+We have run the same experiments as for the \texttt{FIND} algorithm. The results can be seen in \ref{tab:quicksort}.
 As can be seen from the table, the algorithm does not on average exceed our bound, and there is a quite large margin between the average case and the bound on the expected average. We even see as we approach larger n, that our worstcase becomes relatively less larger than our expected average, which is a very nice quality to have.
 \begin{center}
 \begin{figure}
+\caption{Results from running \texttt{QUICKSORT}}
+\label{tab:quicksort}
+\begin{center}
 \begin{tabular}{| c | c | c | c |}
 \hline
 \emph{n} & Avg. Comp. & Max Comp. & $2nlnn$\\ \hline
 $10^2$ & 509 & 1177 & 921.03\\ \hline
 $10^3$ & 9280 & 16809 & 13815.51 \\ \hline
 $10^4$ & 138868 & 206495 & 184206.81\\ \hline
-\end{tabular}	
-\label{table:quicksort}
+\end{tabular}
+\end{center}	
 \end{figure}
 \end{center}
-\todo{Add caption}
 
 {\bf 1.9 \ Implementation}
 
@@ -219,5 +221,4 @@ Our \texttt{FIND} method uses the Standard Library partition\_copy method combin
 
 When generating a random list of integers we first generate a list containing $1,2,\ldots, n-1,n$ elements utilizing generate\_n and a lambda expression and then we randomly shuffle them using the Standard Library shuffle function in conjunction with our mersenne twister engine. This way we make sure we only have unique elements in our list. Seeing as the randomness of this list is not so important because we are randomly choosing an element from it we only regenerate the list once we need one of another size.
 
-\todo{Write something about this}
 \end{document}
