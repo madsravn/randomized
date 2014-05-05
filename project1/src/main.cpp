@@ -145,6 +145,12 @@ int test_k_runs(const int powerofn, const int runs)
 		uint64 maxComps = 0;
 		uint64 totalComps = 0;
 		uint64 totalDepth = 0;
+		uint64 qminDepth = std::numeric_limits<long int>::max();
+		uint64 qmaxDepth = 0;
+		uint64 qminComps = std::numeric_limits<long int>::max();
+		uint64 qmaxComps = 0;
+		uint64 qtotalComps = 0;
+		uint64 qtotalDepth = 0;
 		totalft.start();
 		for (int i = 0; i < runs; ++i)
 		{
@@ -168,7 +174,7 @@ int test_k_runs(const int powerofn, const int runs)
 				if(depth>maxDepth) maxDepth = depth;
 				totalComps += comps;
 				totalDepth += depth;
-		//		std::cout << "find - n: " << n << " and k: " << k << " took " << ft.duration().count() << " ms and had depth: " << depth << " and comps: " << comps << std::endl;
+				std::cout << "1:find - n: " << n << " and k: " << k << " took " << ft.duration().count() << " ms and had depth: " << depth << " and comps: " << comps << std::endl;
 			}
 				//std::cout << "find - n: " << n  << " took " << ft.duration().count() << " ms." << std::endl;
 
@@ -180,18 +186,27 @@ int test_k_runs(const int powerofn, const int runs)
 			quicksort(currentlist, depth, comps);
 			qt.stop();
 			time += qt.duration().count();
-			//std::cout << "sort -n: " << n << " took " << qt.duration().count() << " ms and had depth: " << depth << " and comps: " << comps << std::endl;
+			if(comps < qminComps) qminComps = comps;
+			if(comps > qmaxComps) qmaxComps = comps;
+			if(depth < qminDepth) qminDepth = depth;
+			if(depth>qmaxDepth)qmaxDepth = depth;
+			qtotalComps += comps;
+			qtotalDepth += depth;
+
+			std::cout << "2:sort -n: " << n << " took " << qt.duration().count() << " ms and had depth: " << depth << " and comps: " << comps << std::endl;
 
 			if (qt.duration().count() >= highTime) highTime = qt.duration().count();
 			if (qt.duration().count() <= lowTime) lowTime = qt.duration().count();
 		}
 		totalft.stop();
-		std::cout << runs << " finds took \t" << totalft.duration().count() << " on n=" << n << "\tAverage time: \t" << totalft.duration().count()/runs << std::endl;
-		std::cout << "Fastest time:\t" << lowfTime << "\tSlowest time:\t" << highfTime << std::endl;
-		std::cout << "minDepth:\t" << leastDepth << "\tmaxDepth:\t" << maxDepth << "\tAvgDepth:\t" << totalDepth/(10*runs) << std::endl; //Each run uses 10 different values of k
-		std::cout << "minComps\t" << leastComps << "\tmaxComps:\t" << maxComps << "\tavgComps\t" << totalComps/(10*runs) << std::endl;
-		std::cout << runs << " quicksorts took \t" << time << "ms.\t" << " on n=" << n << "\tAverage time: \t" << (time)/runs << std::endl;
-		std::cout << "Fastest time:\t" << lowTime << "\tSlowest time:\t" << highTime << std::endl;
+		std::cout << "3:" << runs << " finds took \t" << totalft.duration().count() << " on n=" << n << "\tAverage time: \t" << totalft.duration().count()/runs << std::endl;
+		std::cout << "4:Fastest time:\t" << lowfTime << "\tSlowest time:\t" << highfTime << std::endl;
+		std::cout << "5:minDepth:\t" << leastDepth << "\tmaxDepth:\t" << maxDepth << "\tAvgDepth:\t" << totalDepth/(10*runs) << std::endl; //Each run uses 10 different values of k
+		std::cout << "6:minComps\t" << leastComps << "\tmaxComps:\t" << maxComps << "\tavgComps\t" << totalComps/(10*runs) << std::endl;
+		std::cout << "7:" <<runs << " quicksorts took \t" << time << "ms.\t" << " on n=" << n << "\tAverage time: \t" << (time)/runs << std::endl;
+		std::cout << "8:Fastest time:\t" << lowTime << "\tSlowest time:\t" << highTime << std::endl;
+		std::cout << "10:minDepth:\t" << qminDepth << "\tmaxDepth:\t" << qmaxDepth << "\tAvgDepth:\t" << qtotalDepth/(10*runs) << std::endl; //Each run uses 10 different values of k
+		std::cout << "9:minComps\t" << qminComps << "\tmaxComps:\t" << qmaxComps << "\tavgComps\t" << qtotalComps/(10*runs) << std::endl;
 	}
 	return 1;
 }
