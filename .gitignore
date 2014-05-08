@@ -220,3 +220,6 @@ FakesAssemblies/
 
 #vim
 *.swap
+
+#testdata
+project2/testdata/
