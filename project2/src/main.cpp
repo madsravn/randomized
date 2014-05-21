@@ -114,6 +114,25 @@ int32 fingerprint(int32 z, std::vector<int32> hash, std::vector<std::string> lin
     return product;
 }
 
+int32 fingerprintstream(int32 z, std::vector<int32> hash, std::string filename) {
+    int64 product = 1;
+
+    std::ifstream myfile(filename);
+    std::vector<std::string> lines;
+
+    if(myfile.is_open()) {
+        for( std::string line; std::getline(myfile, line); ) {
+            product = product * ( z - hs(hash, line) ) % p;
+        }
+
+    } else {
+        std::cout << "File could not be opened." << std::endl;
+    }
+    return product;
+}
+
+
+
 int main(int argc, char** argv) {
     // Seeding with now instead of random_device.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
@@ -137,9 +156,11 @@ int main(int argc, char** argv) {
     std::cout << "Equal(v9,v10) = " << equal(v9,v10) << std::endl;
 
 
+    // TODO: HVOR TIT SKAL HASH OG Z VÆLGES? 
     std::vector<int32> hash = randforhash();
     const int z = dis(gen);
     std::cout << "Fingerprint of data1a: " << fingerprint(z, hash, v1) << std::endl;
+    std::cout << "Fingerprintstream of data1a: " << fingerprintstream(z, hash, "data1a") << std::endl;
     std::cout << "Fingerprint of data1b: " << fingerprint(z, hash, v2) << std::endl;
     std::cout << "Fingerprint of data2a: " << fingerprint(z, hash, v3) << std::endl;
     std::cout << "Fingerprint of data2b: " << fingerprint(z, hash, v4) << std::endl;
