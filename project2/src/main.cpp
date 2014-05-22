@@ -22,7 +22,8 @@ std::mt19937 gen;
  * Køre uendeling mange test på hver datastørrelse
  * Kørselshastighed sammenlign med naiv
  * På endnu større datasæt - konkater evt bare filer sammen. (Husk bare samme størrelse)
- *
+	 = * RUn with random dataset, worstcase dataset (kun et distinct element) og bestcase dataset (Alle elementer er distincte).
+
  * */
 
 
