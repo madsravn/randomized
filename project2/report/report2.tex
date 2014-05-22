@@ -1,0 +1,54 @@
+\documentclass[article,a4paper,oneside]{article}
+%% Math stuffs
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{todonotes}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\newtheorem{thm}{Theorem}
+\newtheorem{definition}{Definition}
+%%We have quite a bit of math inline, so let's remove the paragraph indent and instead move it a bit down
+\parindent 0pt
+\parskip 4mm
+%% for easy Matrix notation
+\newcommand{\+}[1]{\ensuremath{\boldsymbol{#1}}}
+
+%%For syntaxhighligting when needed:
+%%remember to invoke pdflatex with -shell-escape when not commented out
+\usepackage{minted}
+
+\begin{document}
+\title{
+Randomized Algorithms Project 2\\
+A randomized fingerprinting algorithm for efficient computation of multiset equality.
+}
+
+\author{
+  Mads Ravn - 20071580\\
+  Bo Mortensen - 20073241\\
+  Johan Abildskov - 20063623
+}
+
+\date{\today}
+
+\maketitle
+
+\newpage
+
+\subsection*{Randomized fingerprinting of multisets}
+\subsubsection*{Introduction}
+In the following report we will describe the results from implementing a fingerprinting algorithm for determining multiset equality based upon $2$-$Universal$ hash functions and \emph{Schwartz-Zippel}.
+The issue of determining multiset equality with a deterministic approach is that there are no obvious way that is better than using an efficient sorting algorithm and test for equality. Using the \emph{Schwartz-Zippel} approach also allows us to trivially extend the algorithm to a \emph{streaming} implementation, working efficiently on large datasets. No such approach seems to be possible for the deterministic approach.
+
+\subsection*{Equality of hashed multisets}
+\begin{definition}{2-Universal hash functions}\\
+A hash function h(x) from some Universe \emph{U} to a table {T}, where $|U| >> |T|$, is 2\emph{-}universal iff $x \neq y, x,y \in U \Rightarrow Pr[h(x) = h(y)] \leq \frac{1}{|T|}$
+\end{definition}
+In the rest of the report $T$ will be $\mathbb{F}_p$ where $p = 2^{31} - 1$, which is prime.
+We now consider two distinct multisets $X = \left[x_1,\cdots, x_n\right]$ and $Y = \left[y_1, \cdots, y_n\right]$. We note that we can assume that both sets have the same size, as it is trivial to determine inequality, if the multisets have the different sizes.
+We wish to show that given a hash function $x$ selected uniformly randomly from the family of 2-universal hash functions $H$, $h(X) = \left[h(x_1),\cdots, h(x_n)\right]$ is equal to $h(Y) = \left[h(y_1),\cdots,h(y_n)\right]$ with at most probability $\frac{n}{p}$.
+\end{document}
