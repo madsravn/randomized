@@ -18,6 +18,7 @@ static_assert(sizeof(int64) > 7, "This data type is not big enough (64 bit)");
 
 std::mt19937 gen;
 
+
 /* TESTING 
  * Køre uendeling mange test på hver datastørrelse
  * Kørselshastighed sammenlign med naiv
@@ -89,9 +90,11 @@ std::function<int(int, std::vector<int>)> hashfunction() {
 */
 
 const int32 p = 2147483647;
+
+std::uniform_int_distribution<> dis(0,p-1);
+
 std::vector<int32> randforhash() {
     std::vector<int32> v;
-    std::uniform_int_distribution<> dis(0, p-1);
     for(int i = 0; i < 80; ++i) {
         v.push_back(dis(gen));
     }
@@ -132,49 +135,65 @@ int32 fingerprintstream(int32 z, std::vector<int32> hash, std::string filename) 
     return product;
 }
 
+/* *
+ * Returns true if the two sets are determined equal. false if not.
+ */
+int testStreaming(int n) {
+    std::vector<int32> hash = randforhash();
+    const int z = dis(gen);
+
+    
+    int32 a = fingerprintstream(z, hash, "data" + std::to_string(n) + "a");
+    int32 b = fingerprintstream(z, hash, "data" + std::to_string(n) + "b");
+    return (a == b);
+}
+
+/* *
+ * Returns true if the two sets are determined equal. false if not.
+ */
+int testReading(int n) {
+    std::vector<int32> hash = randforhash();
+    const int z = dis(gen);
+
+    auto v1 = loadfile("data" + std::to_string(n) + "a");
+    auto v2 = loadfile("data" + std::to_string(n) + "b");
+
+    int32 a = fingerprint(z, hash, v1);
+    int32 b = fingerprint(z, hash, v2);
+
+    return (a == b);
+}
+
+/* *
+ * Returns true the two sets are determined equal. false if not.
+ */
+int testDeterministic(int n) {
+
+    auto v1 = loadfile("data" + std::to_string(n) + "a");
+    auto v2 = loadfile("data" + std::to_string(n) + "b");
+
+    return equal(v1,v2);
+}
+
+
+
+ 
 
 
 int main(int argc, char** argv) {
     // Seeding with now instead of random_device.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
-    std::uniform_int_distribution<> dis(0,p-1);
-
-
-    auto v1 = loadfile("data1a");
-    auto v2 = loadfile("data1b");
-    auto v3 = loadfile("data2a");
-    auto v4 = loadfile("data2b");
-    auto v5 = loadfile("data3a");
-    auto v6 = loadfile("data3b");
-    auto v7 = loadfile("data4a");
-    auto v8 = loadfile("data4b");
-    auto v9 = loadfile("data5a");
-    auto v10 = loadfile("data5b");
-    std::cout << "Equal(v1,v2) = " << equal(v1,v2) << std::endl;
-    std::cout << "Equal(v3,v4) = " << equal(v3,v4) << std::endl;
-    std::cout << "Equal(v5,v6) = " << equal(v5,v6) << std::endl;
-    std::cout << "Equal(v7,v8) = " << equal(v7,v8) << std::endl;
-    std::cout << "Equal(v9,v10) = " << equal(v9,v10) << std::endl;
-
-
-    // TODO: HVOR TIT SKAL HASH OG Z VÆLGES? 
-    std::vector<int32> hash = randforhash();
-    const int z = dis(gen);
-    std::cout << "Fingerprint of data1a: " << fingerprint(z, hash, v1) << std::endl;
-    std::cout << "Fingerprintstream of data1a: " << fingerprintstream(z, hash, "data1a") << std::endl;
-    std::cout << "Fingerprint of data1b: " << fingerprint(z, hash, v2) << std::endl;
-    std::cout << "Fingerprint of data2a: " << fingerprint(z, hash, v3) << std::endl;
-    std::cout << "Fingerprint of data2b: " << fingerprint(z, hash, v4) << std::endl;
-    std::cout << "Fingerprint of data3a: " << fingerprint(z, hash, v5) << std::endl;
-    std::cout << "Fingerprint of data3b: " << fingerprint(z, hash, v6) << std::endl;
-    std::cout << "Fingerprint of data4a: " << fingerprint(z, hash, v7) << std::endl;
-    std::cout << "Fingerprint of data4b: " << fingerprint(z, hash, v8) << std::endl;
-    std::cout << "Fingerprint of data5a: " << fingerprint(z, hash, v9) << std::endl;
-    std::cout << "Fingerprint of data5b: " << fingerprint(z, hash, v10) << std::endl;
-
-
-
-
-
+    
+    for(int i = 1; i < 8; ++i) {
+        bool det = testDeterministic(i);
+        int count = 0;
+        for(int j = 0; j < 100000; ++j) {
+            if(testStreaming(i) != det) {
+                ++count;
+            }
+        }
+        std::cout << "At i = " << i << " we encounter an error " << count << " times." << std::endl;
+    }
+            
 	return 0;
 }
