@@ -49,8 +49,12 @@ The issue of determining multiset equality with a deterministic approach is that
 A hash function h(x) from some Universe \emph{U} to a table {T}, where $|U| >> |T|$, is 2\emph{-}universal iff $x \neq y, x,y \in U \Rightarrow Pr[h(x) = h(y)] \leq \frac{1}{|T|}$
 \end{definition}
 In the rest of the report $T$ will be $\mathbb{F}_p$ where $p = 2^{31} - 1$, which is prime.
-We now consider two distinct multisets $X = \left[x_1,\cdots, x_n\right]$ and $Y = \left[y_1, \cdots, y_n\right]$. We note that we can assume that both sets have the same size, as it is trivial to determine inequality, if the multisets have the different sizes.
-We wish to show that given a hash function $x$ selected uniformly randomly from the family of 2-universal hash functions $H$, $h(X) = \left[h(x_1),\cdots, h(x_n)\right]$ is equal to $h(Y) = \left[h(y_1),\cdots,h(y_n)\right]$ with at most probability $\frac{n}{p}$.
+We now consider two distinct multisets $X = \left[x_1,\cdots, x_n\right]$ and $Y = \left[y_1, \cdots, y_n\right]$. We note that we can assume that both sets have the same size, as it is trivial to determine inequality, if the multisets have different sizes.
+We wish to show that using a given hash function $h$ selected uniformly randomly from the family of 2-universal hash functions $H$, $h(X) = \left[h(x_1),\cdots, h(x_n)\right]$ is equal to $h(Y) = \left[h(y_1),\cdots,h(y_n)\right]$ with at most probability $\frac{n}{p}$.
+In order to do this consider the first element $x$ of $X$, the probability that $h(x) = h(y)$ is less than $\frac{1}{p}$ for any given $y \in Y$.
+As there are $n$ elements in $Y$, the probability of a collision between $h(x)$ and an element in y is $\frac{n}{p}$, due to the 2-universality of $H$.
+Now if we consider the second choice of $x$, one could argue that we would have $\frac{n-1}{p}$ different elements to hit in $Y$ with the collision of the next selected element $x \in X$,
+but we are not able to make any claims as to the independence of these random choices. Thus we can't obtain a better bound on the probability that $h(X) = h(Y), X \neq Y$ than $n/p$.
 \subsection*{A 2-universal family of hash functions}
 As we would like to do the arithmetic modulo $p = 2^{31}-1$, we wish to create a family of hash functions that allows us to do work in $\mathbb{F}_p$, even though our elements are of size up to $2^{80}$.
 
@@ -68,4 +72,5 @@ a_1x_1 - a_1y_1 + \sum_{i=2}^{s}a_ix_i - \sum_{i=2}^sa_iy_i &= 0 \iff \\
 \sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i &= a_1(y_i-x_1) \iff \\
 \frac{\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i}{y_1-x_1} &= a_1 \\
 \end{align*}
+As $x$ and $y$ are given, the only random choices in the above comes from the selection of the $a_i$s that fixes $h_s \in H_s$. We can now invoke the Principle of deferred decisions and assumme that all the other random entries in $a$ iare chosen before $a_1$. Then the left hand side of the above is fixed at some value $v \in \mathbb{F}_p$. Since $a_1$ is uniformly distributed over $\mathbb{F}_p$ the probability that $a_1 = v$ cannot exceed $\frac{1}{p}$. We have thus shown that $H_s$ as given is a 2 universal function of hash families.
 \end{document}
