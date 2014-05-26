@@ -51,4 +51,21 @@ A hash function h(x) from some Universe \emph{U} to a table {T}, where $|U| >> |
 In the rest of the report $T$ will be $\mathbb{F}_p$ where $p = 2^{31} - 1$, which is prime.
 We now consider two distinct multisets $X = \left[x_1,\cdots, x_n\right]$ and $Y = \left[y_1, \cdots, y_n\right]$. We note that we can assume that both sets have the same size, as it is trivial to determine inequality, if the multisets have the different sizes.
 We wish to show that given a hash function $x$ selected uniformly randomly from the family of 2-universal hash functions $H$, $h(X) = \left[h(x_1),\cdots, h(x_n)\right]$ is equal to $h(Y) = \left[h(y_1),\cdots,h(y_n)\right]$ with at most probability $\frac{n}{p}$.
+\subsection*{A 2-universal family of hash functions}
+As we would like to do the arithmetic modulo $p = 2^{31}-1$, we wish to create a family of hash functions that allows us to do work in $\mathbb{F}_p$, even though our elements are of size up to $2^{80}$.
+
+We define $H_s=\{\ h_{a_1,\ldots,a_s}\ | \ a_1,\ldots,a)s\in \mathbb{F_p}\ \}$,
+where $h_{a_,\ldots,a_s}(x_1,\ldots,x_s)$.
+
+In order to show that $H_s: 2^{80} \rightarrow 2^p$ indeed is 2-universal, we have to prove that the probability of a collision $h(x) = h(y)$ is less than $\frac{1}{p}$ if $x \neq y$.
+
+Given two elements $x,y \in U, x \neq y$ and a hash function $h_s \in H_s$, the following holds:
+\begin{align*}
+h(x) &= h(y) \iff \\
+\sum_{i=1}^{s}a_ix_i &= \sum_{i=1}^sa_iy_i \iff \\
+\sum_{i=1}^{s}a_ix_i - \sum_{i=1}^sa_iy_i &= 0 \iff \\
+a_1x_1 - a_1y_1 + \sum_{i=2}^{s}a_ix_i - \sum_{i=2}^sa_iy_i &= 0 \iff \\
+\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i &= a_1(y_i-x_1) \iff \\
+\frac{\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i}{y_1-x_1} &= a_1 \\
+\end{align*}
 \end{document}
