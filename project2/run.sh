@@ -13,8 +13,7 @@ for i in $(seq 1 7); do
         DL="http://users-cs.au.dk/gudmund/randomF14/multisets/""$B"
         wget "$DL" -O tests/$B
     fi
-d
 done
-
+echo "Files are all here"
 
 # RUN THE PROGRAM HERE 
