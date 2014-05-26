@@ -56,12 +56,19 @@ As there are $n$ elements in $Y$, the probability of a collision between $h(x)$ 
 Now if we consider the second choice of $x$, one could argue that we would have $\frac{n-1}{p}$ different elements to hit in $Y$ with the collision of the next selected element $x \in X$,
 but we are not able to make any claims as to the independence of these random choices. Thus we can't obtain a better bound on the probability that $h(X) = h(Y), X \neq Y$ than $n/p$.
 \subsection*{A 2-universal family of hash functions}
+\subsection*{Evaluating polynomials of hashed multisets}
+We now consider the function $f_{H(X)}(z) = (z-h(x_1))(z-h(x_2))\ldots(z - h(x_n))$ and $f_{H(Y)}(z) = (z-h(y_1))(z-h(y_2))\ldots(z - h(y_n))$.
+We wish to show that if we choose $z$ uniformly at random from $\mathbb{F}_p$ and $f_{H(X)}$ and $f_{H(Y))}$ are distinct polynomials, then the probability that we will discover this when evaluating $f_{H(X)}(z)$ and $f_{H(Y)}(z)$ is high. The strategy for showing this is showing that if the two polynomials are indeed distinct, then the polynomials will be evaluated to the same value with a probability lower than $\frac{n}{p}$.
+To do this we construct a polynomial $g(z) = f_{H(X)}(z) - f_{H(X)}(z)$, it is clear that the two polynomials only evaluate to the same value if $g(z) = 0$. The degree of $g$ is $n$, which comes from the the $n$ $z$ terms in $g$.
+As we select $z$ uniformly in $\mathbb{F}_p$, the polynomials will only evaluate to the same value with a probability less than $\frac{n}{|\mathbb{F}_p|} = \frac{n}{p}$. This bound stems from using the Schwartz-Zippel theorem on $g$.
+
+\subsection*{A 2-universal family of hash functions}
 As we would like to do the arithmetic modulo $p = 2^{31}-1$, we wish to create a family of hash functions that allows us to do work in $\mathbb{F}_p$, even though our elements are of size up to $2^{80}$.
 
 We define $H_s=\{\ h_{a_1,\ldots,a_s}\ | \ a_1,\ldots,a)s\in \mathbb{F_p}\ \}$,
 where $h_{a_,\ldots,a_s}(x_1,\ldots,x_s)$.
 
-In order to show that $H_s: 2^{80} \rightarrow 2^p$ indeed is 2-universal, we have to prove that the probability of a collision $h(x) = h(y)$ is less than $\frac{1}{p}$ if $x \neq y$.
+In order to show that \todo{Write this correctly}$H_s: 2^{80} \rightarrow 2^p$ indeed is 2-universal, we have to prove that the probability of a collision $h(x) = h(y)$ is less than $\frac{1}{p}$ if $x \neq y$.
 
 Given two elements $x,y \in U, x \neq y$ and a hash function $h_s \in H_s$, the following holds:
 \begin{align*}
@@ -73,4 +80,7 @@ a_1x_1 - a_1y_1 + \sum_{i=2}^{s}a_ix_i - \sum_{i=2}^sa_iy_i &= 0 \iff \\
 \frac{\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i}{y_1-x_1} &= a_1 \\
 \end{align*}
 As $x$ and $y$ are given, the only random choices in the above comes from the selection of the $a_i$s that fixes $h_s \in H_s$. We can now invoke the Principle of deferred decisions and assumme that all the other random entries in $a$ iare chosen before $a_1$. Then the left hand side of the above is fixed at some value $v \in \mathbb{F}_p$. Since $a_1$ is uniformly distributed over $\mathbb{F}_p$ the probability that $a_1 = v$ cannot exceed $\frac{1}{p}$. We have thus shown that $H_s$ as given is a 2 universal function of hash families.
+\subsection*{A fingerprinting algorithm}
+Our proposed algorithm trivially combines the previous sections in this report.
+An input file can be considered as a multiset with its lines being the elements.
 \end{document}
