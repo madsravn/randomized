@@ -141,10 +141,10 @@ int32 fingerprintstream(int32 z, std::vector<int32> hash, std::string filename) 
 int testStreaming(int n) {
     std::vector<int32> hash = randforhash();
     const int z = dis(gen);
-
     
     int32 a = fingerprintstream(z, hash, "data" + std::to_string(n) + "a");
     int32 b = fingerprintstream(z, hash, "data" + std::to_string(n) + "b");
+
     return (a == b);
 }
 
@@ -176,10 +176,6 @@ int testDeterministic(int n) {
 }
 
 
-
- 
-
-
 int main(int argc, char** argv) {
     // Seeding with now instead of random_device.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
@@ -187,7 +183,7 @@ int main(int argc, char** argv) {
     for(int i = 1; i < 8; ++i) {
         bool det = testDeterministic(i);
         int count = 0;
-        for(int j = 0; j < 100000; ++j) {
+        for(int j = 0; j < 10000; ++j) {
             if(testStreaming(i) != det) {
                 ++count;
             }
