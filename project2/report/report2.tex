@@ -50,11 +50,9 @@ A hash function h(x) from some Universe \emph{U} to a table {T}, where $|U| >> |
 \end{definition}
 In the rest of the report $T$ will be $\mathbb{F}_p$ where $p = 2^{31} - 1$, which is prime.
 We now consider two distinct multisets $X = \left[x_1,\cdots, x_n\right]$ and $Y = \left[y_1, \cdots, y_n\right]$. We note that we can assume that both sets have the same size, as it is trivial to determine inequality, if the multisets have different sizes.
-We wish to show that using a given hash function $h$ selected uniformly randomly from the family of 2-universal hash functions $H$, $h(X) = \left[h(x_1),\cdots, h(x_n)\right]$ is equal to $h(Y) = \left[h(y_1),\cdots,h(y_n)\right]$ with at most probability $\frac{n}{p}$.
-In order to do this consider the first element $x$ of $X$, the probability that $h(x) = h(y)$ is less than $\frac{1}{p}$ for any given $y \in Y$.
-As there are $n$ elements in $Y$, the probability of a collision between $h(x)$ and an element in y is $\frac{n}{p}$, due to the 2-universality of $H$.
-Now if we consider the second choice of $x$, one could argue that we would have $\frac{n-1}{p}$ different elements to hit in $Y$ with the collision of the next selected element $x \in X$,
-but we are not able to make any claims as to the independence of these random choices. Thus we can't obtain a better bound on the probability that $h(X) = h(Y), X \neq Y$ than $n/p$.
+We wish to show that using a given hash function $h$ selected uniformly randomly from a family of 2-universal hash functions $H$, $h(X) = \left[h(x_1),\cdots, h(x_n)\right]$ is equal to $h(Y) = \left[h(y_1),\cdots,h(y_n)\right]$ with at most probability $\frac{n}{p}$.
+Consider first the element $x_1 \in X$, the probability that $h(x) = h(y)$, for any $y \in Y$ is at most $\frac{n}{p}$ given the 2-universality of $h$ and $|Y| = n$.
+An obvious way to improve this bound is to now consider the element $x_2 \in X$ and observe that the probability that this collides with a different $y \in Y$ is $\frac{n-1}{p}$. If these random choices could be shown to be independent we could obtain a better bound from $\prod_{i=0}^{n-1}\frac{n-i}{p}$ which is clearly less than $\frac{n}{p}$. But as this is not the case we will keep the weaker bound $\frac{n}{p}$ which in any case matches the bound obtained from using Schwartz-Zippel later.
 \subsection*{A 2-universal family of hash functions}
 \subsection*{Evaluating polynomials of hashed multisets}
 We now consider the function $f_{H(X)}(z) = (z-h(x_1))(z-h(x_2))\ldots(z - h(x_n))$ and $f_{H(Y)}(z) = (z-h(y_1))(z-h(y_2))\ldots(z - h(y_n))$.
