@@ -55,15 +55,15 @@ Consider first the element $x_1 \in X$, the probability that $h(x) = h(y)$, for 
 An obvious way to improve this bound is to now consider the element $x_2 \in X$ and observe that the probability that this collides with a different $y \in Y$ is $\frac{n-1}{p}$. If these random choices could be shown to be independent we could obtain a better bound from $\prod_{i=0}^{n-1}\frac{n-i}{p}$ which is clearly less than $\frac{n}{p}$. But as this is not the case we will keep the weaker bound $\frac{n}{p}$ which in any case matches the bound obtained from using Schwartz-Zippel later.
 \subsection*{A 2-universal family of hash functions}
 \subsection*{Evaluating polynomials of hashed multisets}
-We now consider the function $f_{H(X)}(z) = (z-h(x_1))(z-h(x_2))\ldots(z - h(x_n))$ and $f_{H(Y)}(z) = (z-h(y_1))(z-h(y_2))\ldots(z - h(y_n))$.
+We now consider the functions $f_{H(X)}(z) = (z-h(x_1))(z-h(x_2))\ldots(z - h(x_n))$ and $f_{H(Y)}(z) = (z-h(y_1))(z-h(y_2))\ldots(z - h(y_n))$.
 We wish to show that if we choose $z$ uniformly at random from $\mathbb{F}_p$ and $f_{H(X)}$ and $f_{H(Y))}$ are distinct polynomials, then the probability that we will discover this when evaluating $f_{H(X)}(z)$ and $f_{H(Y)}(z)$ is high. The strategy for showing this is showing that if the two polynomials are indeed distinct, then the polynomials will be evaluated to the same value with a probability lower than $\frac{n}{p}$.
 To do this we construct a polynomial $g(z) = f_{H(X)}(z) - f_{H(X)}(z)$, it is clear that the two polynomials only evaluate to the same value if $g(z) = 0$. The degree of $g$ is $n$, which comes from the the $n$ $z$ terms in $g$.
-As we select $z$ uniformly in $\mathbb{F}_p$, the polynomials will only evaluate to the same value with a probability less than $\frac{n}{|\mathbb{F}_p|} = \frac{n}{p}$. This bound stems from using the Schwartz-Zippel theorem on $g$.
+As we select $z$ uniformly in $\mathbb{F}_p$, Schwartz-Zippel tells us that $g(z) = 0$ with probability less than $\frac{n}{|\mathbb{F}_p|} = \frac{n}{p}$. As the bound on $g(z)$ gives us the bound on evaluation the distinct polynomials to the same value we obtain a bound of $Pr[f_{H(X)}(z) = f_{H(Y)}(z)] \leq \frac{n}{p}$.
 
 \subsection*{A 2-universal family of hash functions}
 As we would like to do the arithmetic modulo $p = 2^{31}-1$, we wish to create a family of hash functions that allows us to do work in $\mathbb{F}_p$, even though our elements are of size up to $2^{80}$.
 
-We define $H_s=\{\ h_{a_1,\ldots,a_s}\ | \ a_1,\ldots,a)s\in \mathbb{F_p}\ \}$,
+We define $H_s=\{\ h_{a_1,\ldots,a_s}\ | \ a_1,\ldots,a)s\in \mathbb{F}_p\ \}$,
 where $h_{a_,\ldots,a_s}(x_1,\ldots,x_s)$.
 
 In order to show that \todo{Write this correctly}$H_s: 2^{80} \rightarrow 2^p$ indeed is 2-universal, we have to prove that the probability of a collision $h(x) = h(y)$ is less than $\frac{1}{p}$ if $x \neq y$.
