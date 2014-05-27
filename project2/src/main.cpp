@@ -250,7 +250,7 @@ int main(int argc, char** argv) {
     while(true) {
         for(int i = 0; i < 7; ++i) {
             for(int j = 0; j < roundabout; ++j) {
-                std::cout << "Testing data" << countzeros(files.at(2*i).size())  << "{a|b}" << std::endl;
+                //std::cout << "Testing data" << countzeros(files.at(2*i).size())  << "{a|b}" << std::endl;
                 if(testReading(files.at(2*i), files.at(2*i+1)) != dets.at(i)) {
                     errors.at(i)++;
                 }
