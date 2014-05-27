@@ -8,13 +8,13 @@
 #include <functional>
 
 typedef char16_t character;
-typedef unsigned long int32;
-typedef unsigned long long int64;
+typedef uint32_t int32;
+typedef uint64_t int64;
 
 // Guard against weird compiler implementation
 static_assert(sizeof(character) == 2, "This data type is not 16 bit");
-static_assert(sizeof(int32) > 3, "This data type is not big enough (32 bit)");
-static_assert(sizeof(int64) > 7, "This data type is not big enough (64 bit)");
+static_assert(sizeof(int32) == 4, "This data type is not big enough (32 bit)");
+static_assert(sizeof(int64) == 8, "This data type is not big enough (64 bit)");
 
 std::mt19937 gen;
 template <class T>
