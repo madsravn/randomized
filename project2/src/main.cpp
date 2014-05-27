@@ -6,10 +6,11 @@
 #include <chrono>
 #include <algorithm>
 #include <functional>
+#include <cstdint>
 
 typedef char16_t character;
-typedef uint32_t int32;
-typedef uint64_t int64;
+typedef std::uint32_t int32;
+typedef std::uint64_t int64;
 
 // Guard against weird compiler implementation
 static_assert(sizeof(character) == 2, "This data type is not 16 bit");
