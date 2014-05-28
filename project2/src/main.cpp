@@ -30,7 +30,7 @@ inline std::ostream& operator << (std::ostream& os, const std::vector<T>& v)
 	return os;
 }
 
-/* TESTING 
+/* TESTING
  * Køre uendeling mange test på hver datastørrelse
  * Kørselshastighed sammenlign med naiv
  * På endnu større datasæt - konkater evt bare filer sammen. (Husk bare samme størrelse)
