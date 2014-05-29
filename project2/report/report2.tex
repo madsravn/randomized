@@ -70,14 +70,13 @@ In order to show that \todo{Write this correctly}$H_s: 2^{80} \rightarrow 2^p$ i
 
 Given two elements $x,y \in U, x \neq y$ and a hash function $h_s \in H_s$, the following holds:
 \begin{align*}
-h(x) &= h(y) \iff \\
-\sum_{i=1}^{s}a_ix_i &= \sum_{i=1}^sa_iy_i \iff \\
-\sum_{i=1}^{s}a_ix_i - \sum_{i=1}^sa_iy_i &= 0 \iff \\
-a_1x_1 - a_1y_1 + \sum_{i=2}^{s}a_ix_i - \sum_{i=2}^sa_iy_i &= 0 \iff \\
-\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i &= a_1(y_i-x_1) \iff \\
-\frac{\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i}{y_1-x_1} &= a_1 \\
+h(x) = h(y) &\iff \sum_{i=1}^{s}a_ix_i = \sum_{i=1}^sa_iy_i \\
+&\iff \sum_{i=1}^{s}a_ix_i - \sum_{i=1}^sa_iy_i = 0 \\
+&\iff a_1x_1 - a_1y_1 + \sum_{i=2}^{s}a_ix_i - \sum_{i=2}^sa_iy_i = 0 \\
+&\iff \sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i = a_1(y_i-x_1) \\
+&\iff \frac{\sum_{i=2}^{s}a_ix_i - \sum_{i=1}^sa_iy_i}{y_1-x_1} = a_1 \\
 \end{align*}
-As $x$ and $y$ are given, the only random choices in the above comes from the selection of the $a_i$s that fixes $h_s \in H_s$. We can now invoke the Principle of deferred decisions and assumme that all the other random entries in $a$ iare chosen before $a_1$. Then the left hand side of the above is fixed at some value $v \in \mathbb{F}_p$. Since $a_1$ is uniformly distributed over $\mathbb{F}_p$ the probability that $a_1 = v$ cannot exceed $\frac{1}{p}$. We have thus shown that $H_s$ as given is a 2 universal function of hash families.
+As $x$ and $y$ are given, the only random choices in the above comes from the selection of the $a_i$s that fixes $h_s \in H_s$. We can now invoke the Principle of deferred decisions and assumme that all the other random entries $a_i$ are chosen before $a_1$. Then the left hand side of the above is fixed at some value $v \in \mathbb{F}_p$. Since $a_1$ is uniformly distributed over $\mathbb{F}_p$ the probability that $a_1 = v$ cannot exceed $\frac{1}{p}$. We have thus shown that $H_s$ as given is a 2 universal function of hash families.
 \subsection*{A fingerprinting algorithm}
 Our proposed algorithm trivially combines the previous sections in this report\todo{Better description of algorithm}.
 An input file can be considered as a multiset with its lines being the elements.
