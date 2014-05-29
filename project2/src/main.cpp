@@ -87,7 +87,8 @@ struct hash {
     }
 };
 
-const int32 p = 2147483647;
+//const int32 p = 2147483647;
+const int32 p = 5308417;
 
 std::uniform_int_distribution<> dis(0,p-1);
 
