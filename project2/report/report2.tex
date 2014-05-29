@@ -1,3 +1,4 @@
+%% vim: set ts=4 sw=4
 \documentclass[article,a4paper,oneside]{article}
 %% Math stuffs
 \usepackage[utf8]{inputenc}
@@ -9,6 +10,8 @@
 \usepackage{todonotes}
 \usepackage{hyperref}
 \usepackage{graphicx}
+%%For pseudocode
+\usepackage{algorithm2e}
 \newtheorem{thm}{Theorem}
 \newtheorem{definition}{Definition}
 %%We have quite a bit of math inline, so let's remove the paragraph indent and instead move it a bit down
@@ -66,7 +69,7 @@ As we would like to do the arithmetic modulo $p = 2^{31}-1$, we wish to create a
 We define $H_s=\{\ h_{a_1,\ldots,a_s}\ | \ a_1,\ldots,a)s\in \mathbb{F}_p\ \}$,
 where $h_{a_,\ldots,a_s}(x_1,\ldots,x_s)$.
 
-In order to show that \todo{Write this correctly}$H_s: 2^{80} \rightarrow 2^p$ indeed is 2-universal, we have to prove that the probability of a collision $h(x) = h(y)$ is less than $\frac{1}{p}$ if $x \neq y$.
+In order to show that $H_s$ indeed is 2-universal, we have to prove that the probability of a collision $h(x) = h(y)$ is less than $\frac{1}{p}$ if $x \neq y$.
 
 Given two elements $x,y \in U, x \neq y$ and a hash function $h_s \in H_s$, the following holds:
 \begin{align*}
@@ -78,13 +81,26 @@ h(x) = h(y) &\iff \sum_{i=1}^{s}a_ix_i = \sum_{i=1}^sa_iy_i \\
 \end{align*}
 As $x$ and $y$ are given, the only random choices in the above comes from the selection of the $a_i$s that fixes $h_s \in H_s$. We can now invoke the Principle of deferred decisions and assumme that all the other random entries $a_i$ are chosen before $a_1$. Then the left hand side of the above is fixed at some value $v \in \mathbb{F}_p$. Since $a_1$ is uniformly distributed over $\mathbb{F}_p$ the probability that $a_1 = v$ cannot exceed $\frac{1}{p}$. We have thus shown that $H_s$ as given is a 2 universal function of hash families.
 \subsection*{A fingerprinting algorithm}
-Our proposed algorithm trivially combines the previous sections in this report\todo{Better description of algorithm}.
+\begin{algorithm}[multisetfingerprinting]
+	\KwData{Multiset}
+	\KwResult{Fingerprint in $F_p$}
+	$z \gets rand(0..2^{p})$\\
+	fix $h_s \in H_s$\\
+	$fingerprint \gets 0$\\
+	\For{element $e \in input$}{
+		$fingerprint \gets fingerprint * (z - h_s(e))$
+	}
+	\Return{$fingerprint$}
+
+\end{algorithm}
+Our proposed algorithm trivially combines the previous sections in this report.
+The algorithm uses the above fingerprinting algorithm to compute a randomized fingerprint of a multiset and compares fingerprints of multisets to determine equality.
 An input file can be considered as a multiset with its lines being the elements.
 The algorithm uses the hash family $H_s$ as defined previously to hash each element of the multiset. Then we can use the function $f_{H(x)}(z)$ as defined previously to obtain a fingerprint in $\mathbb{F}_p$ of the multiset.
 We can do this for any number of multisets and compare these fingerprints to test for equality.
-It is noteworthy that this is a false biased Monte Carlo algorithm\todo{Is this correct?, find definition}, and thus the algorithm always yields a correct answer when the two sets are equal.
+It is noteworthy that this is a false biased Monte Carlo algorithm, which means that when the algorithm answers that the two sets are distinct, it is always right.
 If the two multisets are distinct, then based upon the previously obtained bound on the probability of evaluating two distinct polynomials to the same value on a uniformly random value $z$ is less than $\frac{n}{p}$.
-For an input with $2^{24}$ lines, corresponding to a multiset with $2^{24}$ elements, the probability of a false positive is less than $\frac{2^{24}}{2^{31}-1} < 2^{-6}$\todo{Trawl through text, find less thans and figure whether they should be leqs instead.}. To obtain the desired bound on the error probability of $2^{-12}$, we can simply run the algorithm an additional time, if it reports that the multisets are equal. If we evaluate the polynomials on another indepently chosen $z$ we get an error probability of $2^{-6}*2^{-6} = 2^{-12}$.
+For an input with $2^{24}$ lines, corresponding to a multiset with $2^{24}$ elements, the probability of a false positive is less than $\frac{2^{24}}{2^{31}-1} \leq 2^{-6}$. To obtain the desired bound on the error probability of $2^{-12}$, we can simply run the algorithm an additional time, if it reports that the multisets are equal. If we evaluate the polynomials on another indepently chosen $z$ we get an error probability of $2^{-6}*2^{-6} = 2^{-12}$.
 
 \subsection*{Implementation}
 
