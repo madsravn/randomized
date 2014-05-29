@@ -106,13 +106,17 @@ For an input with $2^{24}$ lines, corresponding to a multiset with $2^{24}$ elem
 
 For our pseudo-random numbers we have used the C++11 implementation of the Mersenne Twister algorithm, the std::mersenne\_twister\_engine. Reference: \url{ http://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine}. We are using a uniform\_int\_distribution to find a random number in a given range. 
 
-When generating our hash-function we create a list $a$ of 80 random numbers in the range $0;p$ since we know that a line of text can't be longer than 80 characters. When hashing a line we find $h(x) = \sum_{i=0}^{80}a_i*x_i $. Each time we compare two given files/streams we pick a new $z$ to calculate the value of the evaluated pylonomial with.
+When generating our hash-function we create a list $a$ of 80 random numbers in the range $[0;p[$ since we know that a line of text can't be longer than 80 characters. When hashing a line we find $h(x) = \sum_{i=0}^{80}a_i*x_i $. Each time we compare two given files/streams we pick a new $z$ to calculate the value of the evaluated pylonomial with. We then compare the value given to each file by this polynomial evaluation, if they are equal we say that the files are equal.
 
-	In our tests we show that we can stream the test-data, but all of our tests are run with the test-data in memory, due to the overhead involved with reading files. The error-prone part of the algorithm has nothing to do with how we read the file, streaming or from memory, so this choice does not alter the results.
-
-\textbf{Skriv noget mere}
+	In our tests we show that we can stream the test-data, but all of our tests are run with the test-data in memory, due to the overhead involved with reading files. The error-prone part of the algorithm has nothing to do with how we read the file, streaming or from memory, so this choice does not alter the results. 
 
 
 \subsection*{Test results}
+
+We downloaded the 14 multisets from the site and ran some tests on those. We determined that the biggest multisets, data7a and data7b, were pretty big and also equal to eachother, so we didn't run any tets on those. We ran $X$ \todo{hvad er tallet, Bo?} tests on the remaining 6 pairs of multisets and seeing those weren't equal to each it gave us some results. First we determined whether two multisets were equal by running the deterministic equality-check: It reads both the files entirely into memory and sort them and then checks element by element if they are equal. After that we ran the randomized equality checks seeing whether they gave the same result as the deterministic. When they did not it we counted that as an error and incremed our error counter.
+
+We notice that the bigger the multisets are the more prone to error they are. This is because we are operating within our field and there is limited space in our field. So the bigger the dataset are (or smaller the field is) the more likely a hash collision is to happen. An error can also occur when $z-h(x)=0$ because then the rest of the product of the fingerprint function will continue to be $0$. We tried turning down the size of our field in order to see if we would experience more errors - we did.
+
+\todo{lidt mere måske?}
 
 \end{document}
