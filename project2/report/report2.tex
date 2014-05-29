@@ -111,10 +111,34 @@ When generating our hash-function, we create a list $a$ of 80 random numbers in 
 
 \subsection*{Test results}
 
-We downloaded the 14 multisets from the course site and ran tests on these. We determined that the biggest multisets, data7a and data7b, were pretty big and also equal to eachother, so we didn't run any tets on those. We ran $X$ \todo{hvad er tallet, Bo?} tests on the remaining 6 pairs of multisets and seeing as these were not equal, it gave us some results. First we determined whether two multisets were equal by running the deterministic equality-check: It reads both the files entirely into memory and sort them and then checks element by element if they are equal. After that we ran the randomized equality checks to see whether they gave the same result as the deterministic. When they did not, we counted it as an error.
+We downloaded the 14 multisets from the course site and ran tests on these. We determined that the biggest multisets, data7a and data7b, were pretty big and also equal to eachother, so we didn't run any tets on those. We ran 4 tests on the remaining 6 pairs of multisets and seeing as these were not equal, it gave us some results. First we determined whether two multisets were equal by running the deterministic equality-check: It reads both the files entirely into memory and sort them and then checks element by element if they are equal. After that we ran the randomized equality checks to see whether they gave the same result as the deterministic. When they did not, we counted it as an error.
 
 We noticed that the bigger the multisets are, the more prone to error they are. This is due to us operating within our field of limited space. So the bigger the dataset are, or the smaller the field is, the more likely a hash collision is to happen. An error can also occur when $z-h(x)=0$ because then the rest of the product of the fingerprint function will continue to be $0$. We tried turning down the size of our field in order to see if we would experience more errors - and we did.
 
-\todo{lidt mere måske?}
+\begin{center}
+\includegraphics[scale=0.3]{p=2^31-1.png}\\
+\end{center}
+In this graph we have run our algorithm on the 6 distinct pairs of datasets 104.000 times. As we see, we don't have any errors with datasets of $n\leq 10^4$. In these cases, the error probability is so low that we don't get a single error. With $n=10^4$ our error probability is $\leq \frac{10^4}{2^{31}-1}$, multiplied by the times we ran the algorithm and we should have $\frac{10^4}{2^{31}-1}\cdot 104000 \leq 0,5$ errors and this matches our results nicely.
+
+With $n=10^5$ and $n=10^6$ the expected number of errors are $5$ and $50$, respectively. Our results from dataset 5 exceeds this slightly, but dataset 6 is significantly lower.
+
+\begin{center}
+\includegraphics[scale=0.3]{p=5308417.png}\\
+\end{center}
+In this graph we tried running the algorithm with a decreased $p$. We expected this to give us significantly more errors, and the results proved this we almost a hundred times more errors.
+
+\begin{center}
+\includegraphics[scale=0.3]{fingerprint_johan.png}\\
+\end{center}
+In this test we tried changing one of the files in dataset 7 to make them distinct, and although the error probability gives us an expected error amount of $100$, it is only marginally larger than set 6. This could be attributed to the low number of repetitions.
+
+\begin{center}
+\includegraphics[scale=0.3]{fingerprint_bo.png}\\
+\end{center}
+Despite being even fewer repetitions this graph shows us, that when dataset 7 is equal, the algorithm always declares them equal.
+
+For the most part of these tests, the results were significantly better than our $\frac{n}{p}$ bound, which suggests that the bound may actually be tighter. The number of results that exceed the bound may get lower with more iterations of the algorithm, but this is uncertain.
+
+If we ran the test twice in each iteration we would likely see a decrease in error probability of a factor $\frac{n}{p}$ to get an error probability of $\frac{n^2}{p^2}$.
 
 \end{document}
