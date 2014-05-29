@@ -84,7 +84,7 @@ As $x$ and $y$ are given, the only random choices in the above comes from the se
 \begin{algorithm}[multisetfingerprinting]
 	\KwData{Multiset}
 	\KwResult{Fingerprint in $F_p$}
-	$z \gets rand(0..2^{p})$\\
+	$z \gets rand(0..p)$\\
 	fix $h_s \in H_s$\\
 	$fingerprint \gets 0$\\
 	\For{element $e \in input$}{
@@ -94,21 +94,21 @@ As $x$ and $y$ are given, the only random choices in the above comes from the se
 
 \end{algorithm}
 Our proposed algorithm trivially combines the previous sections in this report.
-The algorithm uses the above fingerprinting algorithm to compute a randomized fingerprint of a multiset and compares fingerprints of multisets to determine equality.
+	The algorithm uses the above fingerprinting algorithm to compute a randomized fingerprint of a multiset and compares fingerprints of multisets to determine equality.
 An input file can be considered as a multiset with its lines being the elements.
 The algorithm uses the hash family $H_s$ as defined previously to hash each element of the multiset. Then we can use the function $f_{H(x)}(z)$ as defined previously to obtain a fingerprint in $\mathbb{F}_p$ of the multiset.
 We can do this for any number of multisets and compare these fingerprints to test for equality.
 It is noteworthy that this is a false biased Monte Carlo algorithm, which means that when the algorithm answers that the two sets are distinct, it is always right.
 If the two multisets are distinct, then based upon the previously obtained bound on the probability of evaluating two distinct polynomials to the same value on a uniformly random value $z$ is less than $\frac{n}{p}$.
-For an input with $2^{24}$ lines, corresponding to a multiset with $2^{24}$ elements, the probability of a false positive is less than $\frac{2^{24}}{2^{31}-1} \leq 2^{-6}$. To obtain the desired bound on the error probability of $2^{-12}$, we can simply run the algorithm an additional time, if it reports that the multisets are equal. If we evaluate the polynomials on another indepently chosen $z$ we get an error probability of $2^{-6}*2^{-6} = 2^{-12}$.
+For an input with $2^{24}$ lines, corresponding to a multiset with $2^{24}$ elements, the probability of a false positive is less than $\frac{2^{24}}{2^{31}-1} \leq 2^{-6}$. To obtain the desired bound on the error probability of $2^{-12}$, we can simply run the algorithm an additional time, if it reports that the multisets are equal. If we evaluate the polynomials on another independently chosen $z$ we get an error probability of $2^{-6}*2^{-6} = 2^{-12}$.
 
 \subsection*{Implementation}
 
 For our pseudo-random numbers we have used the C++11 implementation of the Mersenne Twister algorithm, the std::mersenne\_twister\_engine. Reference: \url{ http://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine}. We are using a uniform\_int\_distribution to find a random number in a given range. 
 
-When generating our hash-function we create a list of 80 random numbers in the range $0;p$ since we know that a line of text can't be longer than 80 characters. Then when hashing a line we find $X = MAATH-med-sum-her$. Each time we compare two given files/streams we pick a new $z$ to calculate the value of the evaluated pylonomial with.
+When generating our hash-function we create a list $a$ of 80 random numbers in the range $0;p$ since we know that a line of text can't be longer than 80 characters. When hashing a line we find $h(x) = \sum_{i=0}^{80}a_i*x_i $. Each time we compare two given files/streams we pick a new $z$ to calculate the value of the evaluated pylonomial with.
 
-In our tests we show that we can stream the test-data, but all of our tests are run with the test-data in memory, due to the overhead involved with reading files. The error-prone part of the algorithm has nothing to do with how we read the file, streaming or from memory, so that is not a problem.
+	In our tests we show that we can stream the test-data, but all of our tests are run with the test-data in memory, due to the overhead involved with reading files. The error-prone part of the algorithm has nothing to do with how we read the file, streaming or from memory, so this choice does not alter the results.
 
 \textbf{Skriv noget mere}
 
