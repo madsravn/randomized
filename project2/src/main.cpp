@@ -6,6 +6,7 @@
 #include <chrono>
 #include <algorithm>
 #include <functional>
+#include <thread>
 #include <cstdint>
 
 typedef char16_t character;
@@ -199,15 +200,44 @@ int countzeros(int n) {
     }
     return ret;
 }
-       
+
+
+void testingThread(const std::vector<std::vector<std::string>>& files, std::vector<bool> dets) {
+    std::cout << "Starting thread " << std::this_thread::get_id() << std::endl;
+
+    int sets = 6;
+
+    std::vector<int> errors;
+	for (int i = 0; i < sets; ++i) {
+        errors.push_back(0);
+    }
+
+    const int roundabout = 100;
+    int count = 0;
+    std::cout << "Let's start this!" << std::endl;
+    std::cout << "With dets: " << dets << std::endl;
+    while(true) {
+		for (int i = 0; i < sets; ++i) {
+            for(int j = 0; j < roundabout; ++j) {
+                //std::cout << "Testing data" << countzeros(files.at(2*i).size())  << "{a|b}" << std::endl;
+                if(testReading(files.at(2*i), files.at(2*i+1)) != dets.at(i)) {
+                    errors.at(i)++;
+                }
+            }
+        }
+        count+=roundabout;
+        std::cout << std::this_thread::get_id() << " count = " << count << std::endl;
+        std::cout << std::this_thread::get_id() << " " << errors << std::endl;
+    }
+}
 
 int main(int argc, char** argv) {
 
-	static int sets = 7;
+	int sets = 6;
+    std::cout << std::thread::hardware_concurrency() << std::endl;
 
     // Seeding with now instead of random_device.
     gen.seed(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
-    std::cout << "zeroes in 220020: " << countzeros(220020) << std::endl;
 
     // Pre-calculations
     std::cout << "Pre-calculating deterministic solutions..." << std::endl;
@@ -217,10 +247,22 @@ int main(int argc, char** argv) {
     }
     std::cout << "Done with deterministic... Proceeding to loading files..." << std::endl;
 
+    
     std::vector<std::vector<std::string>> files;
-    for(int i = 2; i < 16; ++i) {
+    for(int i = 2; i < sets*2+2; ++i) {
         files.push_back(loadfile(filenamefromnumber(i)));
     }
+
+    std::thread first {testingThread, ref(files), dets};
+    std::thread second {testingThread, ref(files), dets};
+    std::thread third {testingThread, ref(files), dets};
+    std::thread fourth {testingThread, ref(files), dets};
+    first.join();
+    second.join();
+    third.join();
+    fourth.join();
+
+    /*
 
     std::vector<int> errors;
 	for (int i = 0; i < sets; ++i) {
@@ -247,6 +289,7 @@ int main(int argc, char** argv) {
         std::cout << "count = " << count << std::endl;
         std::cout << errors << std::endl;
     }
+    */
             
 	return 0;
 }

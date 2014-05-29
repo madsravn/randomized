@@ -1,5 +1,5 @@
 CC = clang++
-CFLAGS = -O3 -std=c++11
+CFLAGS = -O3 -std=c++11 -lpthread -pthread
 SRCPATH = src
 BUILDPATH = build
 
