@@ -1,4 +1,4 @@
-%% vim: set ts=4 sw=4
+% vim: set ts=4 sw=4
 \documentclass[article,a4paper,oneside]{article}
 %% Math stuffs
 \usepackage[utf8]{inputenc}
@@ -139,6 +139,14 @@ Despite being even fewer repetitions this graph shows us, that when dataset 7 is
 
 For the most part of these tests, the results were significantly better than our $\frac{n}{p}$ bound, which suggests that the bound may actually be tighter. The number of results that exceed the bound may get lower with more iterations of the algorithm, but this is uncertain.
 
-If we ran the test twice in each iteration we would likely see a decrease in error probability of a factor $\frac{n}{p}$ to get an error probability of $\frac{n^2}{p^2}$.
+If we ran the test twice in each iteration, as the algorithm is described, we would see a decrease in error probability of a factor $\frac{n}{p}$ to get an error probability of $\frac{n^2}{p^2}$, which for datasets of $2^{24}$ elements yields $2^{-12}$.
+\subsubsection*{Runtime}
+\begin{center}
+	\includegraphics[scale=0.5]{runtime.png}\\
+\end{center}
+In the graph runtime, we have done a small (3600 iterations) experiment comparing the runtime of the deterministic (sorting) algorithm with that of our fingerprinting algorithm. The runtimes are in nanoseconds and on a logarithmic scale. As can be seen on the graph the randomized algorithm runs quite a bit better than the determistic algorithm as is expected.
+
+\subsection*{Conclusion}
+The algorithm that we have designed performs well, both in terms of performance and expected error probability. The algorithm also solves the streaming multiset equality problem using a randomized approach that has no obvious way of being done with a deterministic approach. This is would be particularly useful when using datasets that are too large to fit in main memory, as we use a single sweep through the dataset. A deterministic solution can not do this.
 
 \end{document}
